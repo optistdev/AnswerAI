@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @theme {
   --font-body: Inter, sans-serif;
@@ -9,4 +9,8 @@
   --color-border-secondary: oklch(0.8706 0.2009 104.17);
   --color-description: oklch(0.7132 0.0043 259.94);
   --color-sidebar-icon: oklch(0.5908 0.0126 144.77);
+}
+
+:root {
+  background-color: var(--color-background-primary);
 }
