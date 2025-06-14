@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { registerWithEmail } from '../../services/authService';
 import { useNavigate } from 'react-router-dom';
-import Input from '../../components/customInput';
+import Input from '../../components/input';
 
 const RegisterPage: React.FC = () => {
   const navigate = useNavigate();
