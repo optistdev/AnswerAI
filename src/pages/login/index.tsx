@@ -5,7 +5,7 @@ import Input from '../../components/input';
 import Button from '../../components/authButton';
 import { Link } from 'react-router-dom';
 
-const RegisterPage: React.FC = () => {
+const LoginPage: React.FC = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -41,26 +41,24 @@ const RegisterPage: React.FC = () => {
           <Input
             type="password"
             name="passoword"
-            placeholder="Create a password"
+            placeholder="Enter your password"
             className="w-full h-[50px]"
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          <Input
-            type="password"
-            name="repassoword"
-            placeholder="Confirm your password"
+
+          <Button type="submit" label="Sign In" className="w-full h-[50px]" />
+          <Button
+            label="Sign in with Google"
             className="w-full h-[50px]"
-            onChange={(e) => setPassword(e.target.value)}
-            required
+            img="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
           />
-          <Button type="submit" label="Sign Up" className="w-full h-[50px]" />
         </form>
 
         <p className="mt-4 text-sm text-center text-gray-600">
           Already have an account?{' '}
-          <Link to="/login" className="text-blue-500 underline">
-            Sign In
+          <Link to="/register" className="text-blue-500 underline">
+            Sign Up
           </Link>
         </p>
       </div>
@@ -68,4 +66,4 @@ const RegisterPage: React.FC = () => {
   );
 };
 
-export default RegisterPage;
+export default LoginPage;

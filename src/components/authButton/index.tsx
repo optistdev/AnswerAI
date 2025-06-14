@@ -2,10 +2,11 @@ interface ButtonProps {
   className: string;
   label: string;
   type?: 'button' | 'submit' | 'reset';
+  img?: string;
   onClick?: () => void;
 }
 
-const CustomizedButton = ({ className, label, type, onClick }: ButtonProps) => {
+const CustomizedButton = ({ className, label, type, img, onClick }: ButtonProps) => {
   return (
     <div className={`relative flex items-center ${className}`}>
       <button
@@ -16,6 +17,7 @@ const CustomizedButton = ({ className, label, type, onClick }: ButtonProps) => {
         onClick={onClick}
         type={type}
       >
+        {img && <img src={img} className="w-7 h-7 mr-2" />}
         {label}
       </button>
     </div>
