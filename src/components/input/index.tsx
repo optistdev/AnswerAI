@@ -2,7 +2,7 @@ import React from "react";
 
 interface InputProps {
   className: string;
-  type?: "text" | "password" | "email";
+  type?: "text" | "password" | "email" | "search";
   placeholder?: string;
   error?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -38,7 +38,7 @@ const CustomizedInput: React.FC<InputProps> = ({
         aria-invalid={!!(error && required)}
         aria-describedby={`${name}-error`}
         className={`
-          w-full h-full px-4 rounded-lg bg-[#1a1a1a] focus:outline-none focus:ring-1 focus:ring-gray-400 ${inputBorder}
+          w-full h-full px-2 rounded-[5px] bg-[#1a1a1a] focus:outline-none focus:ring-1 focus:ring-gray-400 ${inputBorder}
           placeholder:text-[15px] text-white
           ${isPassword ? "pr-10" : ""}
         `}
