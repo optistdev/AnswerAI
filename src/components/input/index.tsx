@@ -24,7 +24,7 @@ const CustomizedInput: React.FC<InputProps> = ({
   const inputBorder =
     error && required
       ? "border-red-500 dark:focus:border-red-700 focus:border-red-700"
-      : "border border-gray-600";
+      : "border border-[#5a5a5a]";
 
   return (
     <div className={`relative ${className}`}>
