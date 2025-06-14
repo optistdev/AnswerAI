@@ -10,19 +10,10 @@ interface InputProps {
   required?: boolean;
 }
 
-const CustomizedInput: React.FC<InputProps> = ({
-  className,
-  type = 'text',
-  placeholder,
-  error,
-  onChange,
-  name,
-  required = false,
-}) => {
+const CustomizedInput: React.FC<InputProps> = ({ className, type = 'text', placeholder, error, onChange, name }) => {
   const isPassword = type === 'password';
 
-  const inputBorder =
-    error && required ? 'border-red-500 dark:focus:border-red-700 focus:border-red-700' : 'border border-[#5a5a5a]';
+  const inputBorder = error ? 'border border-red-500 ' : 'border border-[#5a5a5a]';
 
   return (
     <div className={`relative ${className}`}>
@@ -32,8 +23,7 @@ const CustomizedInput: React.FC<InputProps> = ({
         placeholder={placeholder}
         type={type}
         onChange={onChange}
-        required={required}
-        aria-invalid={!!(error && required)}
+        aria-invalid={!!error}
         aria-describedby={`${name}-error`}
         className={`
           w-full h-full px-2 rounded-[5px] bg-[#1a1a1a] focus:outline-none focus:ring-1 focus:ring-gray-400 ${inputBorder}
@@ -41,8 +31,8 @@ const CustomizedInput: React.FC<InputProps> = ({
           ${isPassword ? 'pr-10' : ''}
         `}
       />
-      {error && required && (
-        <span id={`${name}-error`} className="text-red-600 text-sm absolute mt-1">
+      {error && (
+        <span id={`${name}-error`} className="text-red-600 text-sm absolute bottom-[-17px] left-2 mt-1">
           {error}
         </span>
       )}
