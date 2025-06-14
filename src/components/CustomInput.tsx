@@ -1,8 +1,7 @@
 import React from "react";
 
 interface InputProps {
-  width: number;
-  height: number;
+  className: string;
   type?: "text" | "password" | "email";
   placeholder?: string;
   error?: string;
@@ -12,8 +11,7 @@ interface InputProps {
 }
 
 const CustomizedInput: React.FC<InputProps> = ({
-  width,
-  height,
+  className,
   type = "text",
   placeholder,
   error,
@@ -29,7 +27,7 @@ const CustomizedInput: React.FC<InputProps> = ({
       : "border border-gray-600";
 
   return (
-    <div style={{ width, height }} className="relative">
+    <div className={`relative ${className}`}>
       <input
         id={name}
         name={name}
