@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { registerWithEmail } from '../../services/authService';
 import { useNavigate } from 'react-router-dom';
 import Input from '../../components/input';
+import Button from '../../components/button';
 
 const RegisterPage: React.FC = () => {
   const navigate = useNavigate();
@@ -13,7 +14,9 @@ const RegisterPage: React.FC = () => {
     e.preventDefault();
     setError('');
     try {
-      await registerWithEmail(email, password);
+      const result = await registerWithEmail(email, password);
+      console.log(result);
+
       navigate('/dashboard');
     } catch (err: any) {
       setError(err.message || 'Registration failed.');
@@ -24,27 +27,25 @@ const RegisterPage: React.FC = () => {
     <div className="min-h-screen flex items-center justify-center  px-4">
       <div className=" p-6 rounded-lg shadow-md w-full max-w-md">
         <h2 className="text-2xl font-bold mb-4 text-center">Create an Account</h2>
-        {error && <p className="text-red-600 text-sm mb-3">{error}</p>}
         <form onSubmit={handleSubmit} className="space-y-4">
-          <input
+          <Input
             type="email"
+            name="email"
             placeholder="Email"
-            className="w-full px-3 py-2 border border-gray-300 rounded"
-            value={email}
+            className="w-full h-[50px]"
+            error={error}
             onChange={(e) => setEmail(e.target.value)}
             required
           />
-          <input
+          <Input
             type="password"
+            name="passoword"
             placeholder="Password"
-            className="w-full px-3 py-2 border border-gray-300 rounded"
-            value={password}
+            className="w-full h-[50px]"
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          <button type="submit" className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition">
-            Register
-          </button>
+          <Button type="submit" label="Register" className="w-full h-[50px]" />
         </form>
 
         <p className="mt-4 text-sm text-center text-gray-600">
