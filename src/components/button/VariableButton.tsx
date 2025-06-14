@@ -14,18 +14,22 @@ export const VariableButton = ({
   return (
     <button
       onClick={onClick}
-      className={`flex items-center gap-2 px-4 py-1 rounded-full border text-sm transition-colors
+      className={`flex items-center gap-[15px] px-4 py-1 rounded-full border text-[15px] tracking-[0%] leading-[150%] font-normal transition-colors
         ${
           selected
-            ? "bg-lime-500/10 text-lime-400 border-lime-400"
-            : "bg-[#1a1a1a] text-gray-300 border-gray-600"
+            ? "bg-[#282E16] text-lime-400 border-border-secondary"
+            : "bg-[#1a1a1a] text-gray-300 border-[#EEEEEE]"
         }`}
     >
       {label}
-      <span className="text-xs">
-        <Icons.Sparkles />
-      </span>
-      <span>{selected ? <Icons.Check /> : <Icons.Plus />}</span>
+      <div className="flex gap-2">
+        <span className="text-xs">
+          <Icons.Sparkles size={14} />
+        </span>
+        <span>
+          {selected ? <Icons.Check size={14} /> : <Icons.Plus size={14} />}
+        </span>
+      </div>
     </button>
   );
 };
