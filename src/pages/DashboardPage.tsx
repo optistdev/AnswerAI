@@ -1,7 +1,9 @@
+import Header from "./layout/Header";
+
 const DashboardPage = () => {
   return (
     <>
-      <div className="text-white">Hello world!</div>
+      <div>hello</div>
     </>
   );
 };

@@ -22,7 +22,7 @@ const SearchInput: React.FC<InputProps> = ({
         type="search"
         onChange={onChange}
         className={`
-          w-full pl-10 pr-4 py-2 rounded-[5px] bg-[#1a1a1a] border-[1px] border-gray-600 text-white placeholder-gray-400 outline-none focus:ring-1 focus:ring-gray-400
+          w-full h-full pl-10 pr-4 py-2 rounded-[5px] bg-[#1a1a1a] border-[1px] border-gray-600 text-white placeholder-gray-400 outline-none focus:ring-1 focus:ring-gray-400
         `}
       />
     </div>
