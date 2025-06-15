@@ -1,6 +1,6 @@
 import { useState } from "react";
 import ChargingIcon from "../assets/icons/ChargingIcon";
-import CustomizedButton from "../components/button";
+import Button from "../components/button";
 import RefreshIcon from "../assets/icons/RefreshIcon";
 import UploadIcon from "../assets/icons/UploadIcon";
 import SparklesIcon from "../assets/icons/SparklesIcon";
@@ -11,7 +11,7 @@ const DashboardPage = () => {
   const [opened, setOpened] = useState<boolean>(false);
 
   return (
-    <div className="w-full h-full bg-[#161618] rounded-[5px] border-border-primary border pl-10 pr-9">
+    <div className="w-full min-h-full bg-[#161618] rounded-[5px] border-border-primary border pl-10 pr-9 pb-3">
       <div className="md:flex justify-between w-full pt-4 md:pt-10 text-white">
         <div className="flex items-center justify-center gap-[13px]">
           <div>
@@ -22,17 +22,17 @@ const DashboardPage = () => {
           </p>
         </div>
         <div className="flex items-center gap-3 mt-3 md:mt-0 justify-between md:justify-center">
-          <CustomizedButton
+          <Button
             className="h-10 w-10"
             icon={<RefreshIcon className="text-description" />}
             onClick={() => console.log("refresh")}
           />
-          <CustomizedButton
+          <Button
             label="Edit Variables"
             className="h-10 px-2"
             onClick={() => setOpened(true)}
           />
-          <CustomizedButton
+          <Button
             className="h-10 w-10"
             icon={<UploadIcon className="" />}
             onClick={() => console.log("upload")}
@@ -130,7 +130,7 @@ const SenarioResults = () => {
             Best Scenario Results
           </p>
         </div>
-        <CustomizedButton
+        <Button
           className="rounded-full border-[#C8E972] border w-11 h-[34px] "
           icon={
             show ? (
@@ -157,7 +157,7 @@ const SenarioResults = () => {
               className="flex justify-between items-center text-[#C8E972] border-[#C8E972] border-[0.5px] rounded-[6px] py-4 px-6"
             >
               <p>{result}</p>
-              <CustomizedButton
+              <Button
                 className="border-none bg-inherit"
                 onClick={() => console.log("")}
                 icon={<DotsIcon className="text-[#C8E972]" />}

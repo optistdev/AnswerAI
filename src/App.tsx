@@ -19,7 +19,7 @@ function App() {
           {user ? <Sidebar /> : <></>}
           <div className="w-full">
             <Header />
-            <main className="w-full minh-[calc(100vh-87px)]">
+            <main className="w-full h-[calc(100vh-87px)]">
               <AppRoutes />
             </main>
           </div>
