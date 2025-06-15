@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { loginWithEmail, loginWithGoogle } from '../../services/authService';
 import { useNavigate } from 'react-router-dom';
 import Input from '../../components/input';
-import Button from '../../components/authButton';
+import Button from '../../components/auth-button';
 import { Link } from 'react-router-dom';
 
 const LoginPage: React.FC = () => {
