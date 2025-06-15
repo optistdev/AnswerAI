@@ -3,21 +3,19 @@ import { BrowserRouter } from 'react-router-dom';
 import { Toaster } from 'sonner';
 import AppRoutes from './routes/AppRoutes';
 import Sidebar from './pages/layout/SideBar';
+import Header from './pages/layout/Header';
 import { useAuth } from './context/AuthContext';
-import { useEffect } from 'react';
 
 function App() {
   const { user } = useAuth();
 
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
   return (
     <BrowserRouter>
       <Toaster richColors position="top-right" />
       <div className="flex">
         {user ? <Sidebar /> : <></>}
         <div className="w-full">
+          <Header />
           <AppRoutes />
         </div>
       </div>
