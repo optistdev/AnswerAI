@@ -17,7 +17,6 @@ export const loginWithGoogle = async (): Promise<UserCredential> => {
     const result = await signInWithPopup(auth, provider);
     return result;
   } catch (err: any) {
-    // If the email already exists with another provider (e.g. password)
     if (err.code === 'auth/account-exists-with-different-credential') {
       const email = err.customData?.email;
       const pendingCred = GoogleAuthProvider.credentialFromError(err);
@@ -27,17 +26,18 @@ export const loginWithGoogle = async (): Promise<UserCredential> => {
       const methods = await fetchSignInMethodsForEmail(auth, email);
 
       if (methods.includes('password')) {
-        // Ask user to log in with email/password first
-        const password = prompt('This email is already registered. Please enter your password to link Google sign-in:');
+        const password = prompt(`An account with ${email} already exists. Enter your password to link Google login:`);
 
         if (!password) throw new Error('Password is required to link accounts.');
 
         const emailLogin = await signInWithEmailAndPassword(auth, email, password);
-
-        // Link Google credential to the password account
         await linkWithCredential(emailLogin.user, pendingCred);
 
-        return { user: emailLogin.user, providerId: 'google.com', operationType: 'link' } as UserCredential;
+        return {
+          ...emailLogin,
+          providerId: 'google.com',
+          operationType: 'link',
+        };
       }
 
       throw err;
