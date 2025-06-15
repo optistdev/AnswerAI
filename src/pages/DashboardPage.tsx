@@ -1,9 +1,7 @@
-import Sidebar from "./layout/SideBar";
-
 const DashboardPage = () => {
   return (
     <>
-      <Sidebar />
+      <div className="text-white">Hello world!</div>
     </>
   );
 };
