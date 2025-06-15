@@ -1,11 +1,12 @@
-import { useState } from 'react';
-import ChargingIcon from '../../assets/icons/ChargingIcon';
-import Button from '../../components/button';
-import RefreshIcon from '../../assets/icons/RefreshIcon';
-import UploadIcon from '../../assets/icons/UploadIcon';
-import SenarioResults from './SenarioResults';
-import { CircleHelp } from 'lucide-react';
-import EditVariables from './EditVariables';
+import { useState } from "react";
+import ChargingIcon from "../../assets/icons/ChargingIcon";
+import Button from "../../components/button";
+import RefreshIcon from "../../assets/icons/RefreshIcon";
+import UploadIcon from "../../assets/icons/UploadIcon";
+import SenarioResults from "./SenarioResults";
+import { CircleHelp } from "lucide-react";
+import EditVariables from "./EditVariables";
+import ChartView from "../../components/chart";
 
 const DashboardPage = () => {
   const [opened, setOpened] = useState<boolean>(false);
@@ -18,40 +19,50 @@ const DashboardPage = () => {
           <div>
             <ChargingIcon className="text-white text-xs md:text-lg" />
           </div>
-          <p className="text-2xl md:text-[32px] tracking-normal">Charging Station</p>
+          <p className="text-xl md:text-2xl lg:text-[32px] tracking-normal">
+            Charging Station
+          </p>
         </div>
-        <div className="flex items-center gap-3 mt-3 md:mt-0 justify-between md:justify-center">
+        <div className="flex items-center gap-3 mt-5 md:mt-0 justify-between md:justify-center">
           <Button
             className="h-10 w-10"
             icon={<RefreshIcon className="text-description" />}
-            onClick={() => console.log('refresh')}
+            onClick={() => console.log("refresh")}
           />
-          <Button label="Edit Variables" className="h-10 px-2" onClick={() => setOpened(true)} />
-          <Button className="h-10 w-10" icon={<UploadIcon className="" />} onClick={() => console.log('upload')} />
+          <Button
+            label="Edit Variables"
+            className="h-10 px-2"
+            onClick={() => setOpened(true)}
+          />
+          <Button
+            className="h-10 w-10"
+            icon={<UploadIcon className="" />}
+            onClick={() => console.log("upload")}
+          />
         </div>
       </div>
       <SenarioResults />
       <div className="text-white grid grid-cols-1 xl:grid-cols-12 gap-6 mt-[30px]">
-        {/* Graph Section */}
         <div className="xl:col-span-7 w-full h-full rounded-xl flex flex-col">
           <div className="mb-4">
             <h2 className="text-2xl font-semibold">Graphs</h2>
           </div>
 
-          {/* This child will take up all remaining vertical space */}
-          <div className="flex-1 w-full bg-[#222324] rounded-[5px] border border-[#525252]">
+          <div className="flex-1 w-full h-full bg-[#222324] rounded-[5px] border border-[#525252]">
             <div className="flex justify-end pt-8 pr-12">
               <select className="bg-[#18181A80] text-white border border-neutral-600 rounded px-3 py-2 text-sm w-full sm:w-auto">
                 <option>Unsatisfied Demand %</option>
               </select>
             </div>
+            {/* <ChartView /> */}
           </div>
         </div>
 
-        {/* KPI Section */}
         <div className="xl:col-span-5 flex flex-col">
           <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-4">
-            <h2 className="text-2xl font-semibold">Key Performance Indicators</h2>
+            <h2 className="text-2xl font-semibold">
+              Key Performance Indicators
+            </h2>
             <button className="flex justify-center items-center gap-1 text-[14px] border border-neutral-600 h-8 w-[102px] rounded hover:bg-neutral-700">
               Variables <span className="text-lg">＋</span>
             </button>
@@ -60,24 +71,28 @@ const DashboardPage = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {[
               {
-                label: 'Infrastructure Units',
-                description: 'This describes variable two and what the shown data means.',
-                value: '€421.07',
+                label: "Infrastructure Units",
+                description:
+                  "This describes variable two and what the shown data means.",
+                value: "€421.07",
               },
               {
-                label: 'Charging Growth',
-                description: 'This describes variable two and what the shown data means.',
-                value: '33.07',
+                label: "Charging Growth",
+                description:
+                  "This describes variable two and what the shown data means.",
+                value: "33.07",
               },
               {
-                label: 'Localization change',
-                description: 'This describes variable two and what the shown data means.',
-                value: '21.9%',
+                label: "Localization change",
+                description:
+                  "This describes variable two and what the shown data means.",
+                value: "21.9%",
               },
               {
-                label: 'Fleet growth',
-                description: 'This describes variable two and what the shown data means.',
-                value: '7.03%',
+                label: "Fleet growth",
+                description:
+                  "This describes variable two and what the shown data means.",
+                value: "7.03%",
               },
             ].map((item, idx) => (
               <div
@@ -90,8 +105,12 @@ const DashboardPage = () => {
                     <CircleHelp />
                   </span>
                 </div>
-                <p className="text-description text-[12px] leading-[150%] w-2/3">{item.description}</p>
-                <div className="text-[32px] font-semibold flex justify-end mt-10">{item.value}</div>
+                <p className="text-description text-[12px] leading-[150%] w-2/3">
+                  {item.description}
+                </p>
+                <div className="text-[32px] font-semibold flex justify-end mt-10">
+                  {item.value}
+                </div>
               </div>
             ))}
           </div>
