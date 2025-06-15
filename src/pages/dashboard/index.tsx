@@ -13,7 +13,13 @@ const DashboardPage = () => {
   return (
     <div className="w-full min-h-full bg-[#161618] rounded-[5px] border-border-primary border pl-10 pr-9 pb-3">
       <div className="md:flex justify-between w-full pt-4 md:pt-8 text-white">
-        {opened && <EditVariables />}
+        <EditVariables
+          onClick={() => setOpened(false)}
+          className={`
+            transition-all duration-300 ease-in-out
+            ${opened ? 'opacity-100 translate-x-0 pointer-events-auto' : 'opacity-0 translate-x-10 pointer-events-none'}
+          `}
+        />
         <div className="flex items-center justify-center gap-[13px]">
           <div>
             <ChargingIcon className="text-white text-xs md:text-lg" />
