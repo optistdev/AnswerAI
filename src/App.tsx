@@ -17,7 +17,11 @@ function App() {
       <div className="flex">
         {user ? <Sidebar /> : <></>}
         <div className="w-full">
-          <main className={`w-full minh-[calc(100vh-87px)] ${isMenuOpen ? 'md:ml-50' : 'md:ml-20'}`}>
+          <main
+            className={`minh-[calc(100vh-87px)] ${isMenuOpen ? 'md:ml-50' : 'md:ml-20'} ${
+              isMenuOpen ? 'md:w-[calc(100vw-216px)]' : 'md:w-[calc(100vw-96px)]'
+            }  w-full`}
+          >
             <Header />
             <AppRoutes />
           </main>
