@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import Input from '../../components/input';
 import Button from '../../components/auth-button';
 import { Link } from 'react-router-dom';
+import { toast } from 'sonner';
 
 const LoginPage: React.FC = () => {
   const navigate = useNavigate();
@@ -47,19 +48,34 @@ const LoginPage: React.FC = () => {
 
     try {
       const result = await loginWithEmail(formData.email, formData.password);
+      toast.success('Logged in successfully!');
       console.log(result);
       navigate('/dashboard');
     } catch (err: any) {
-      console.log(err.message || 'Log in failed.');
+      console.log(err.code || 'Log in failed.');
+      const code = err.code;
+      if (code === 'auth/invalid-credential') {
+        toast.error('Invalid credentials', { description: 'User not found or invalid user credential.' });
+      } else if (code === 'auth/too-many-requests') {
+        toast.error('Too many attempts', { description: 'Please try again later.' });
+      } else if (code === 'auth/user-disabled') {
+        toast.error('Account Disabled', {
+          description: 'Your account has been disabled. Please contact support.',
+        });
+      } else {
+        toast.error('Login failed', { description: err.message || 'Unknown error.' });
+      }
     }
   };
   const googleAuthHandler = async () => {
     try {
       const result = await loginWithGoogle();
+      toast.success('Logged in successfully!');
       console.log(result);
       navigate('/dashboard');
     } catch (err: any) {
       console.error('Google login failed:', err.message);
+      toast.error('Login failed', { description: err.message || 'Unknown error.' });
     }
   };
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

@@ -4,6 +4,9 @@ import { useNavigate } from 'react-router-dom';
 import Input from '../../components/input';
 import Button from '../../components/auth-button';
 import { Link } from 'react-router-dom';
+import { toast } from 'sonner';
+import { signOut } from 'firebase/auth';
+import { auth } from '../../lib/firebase';
 
 const RegisterPage: React.FC = () => {
   const navigate = useNavigate();
@@ -59,9 +62,24 @@ const RegisterPage: React.FC = () => {
     try {
       const result = await registerWithEmail(formData.email, formData.password);
       console.log(result);
+      await signOut(auth);
+      toast.success('Registration successful!', {
+        description: 'You can now log in.',
+      });
       navigate('/login');
     } catch (err: any) {
       console.log(err.message || 'Registration failed.');
+      const code = err.code;
+
+      if (code === 'auth/email-already-in-use') {
+        toast.error('Email already in use', {
+          description: 'Please use a different email.',
+        });
+      } else {
+        toast.error('Registration failed', {
+          description: err.message || 'Something went wrong.',
+        });
+      }
     }
   };
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
