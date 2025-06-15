@@ -1,31 +1,33 @@
-import "./App.css";
-import { BrowserRouter } from "react-router-dom";
-import { Toaster } from "sonner";
-import AppRoutes from "./routes/AppRoutes";
-import Sidebar from "./pages/layout/SideBar";
-import Header from "./pages/layout/Header";
-import { useAuth } from "./context/AuthContext";
-import { Provider } from "react-redux";
-import { store } from "./store";
+import './App.css';
+import { BrowserRouter } from 'react-router-dom';
+import { Toaster } from 'sonner';
+import AppRoutes from './routes/AppRoutes';
+import Sidebar from './pages/layout/SideBar';
+import Header from './pages/layout/Header';
+import { useAuth } from './context/AuthContext';
+import useAppSelector from './hooks/global/useAppSelector';
 
 function App() {
   const { user } = useAuth();
+  const { isMenuOpen } = useAppSelector((state) => state.loading);
 
   return (
-    <Provider store={store}>
-      <BrowserRouter>
-        <Toaster richColors position="top-right" />
-        <div className="flex">
-          {user ? <Sidebar /> : <></>}
-          <div className="w-full">
+    <BrowserRouter>
+      <Toaster richColors position="top-right" />
+      <div className="flex">
+        {user ? <Sidebar /> : <></>}
+        <div className="w-full">
+          <main
+            className={`h-[calc(100vh-87px)] ${isMenuOpen ? 'md:ml-50' : 'md:ml-20'} ${
+              isMenuOpen ? 'md:w-[calc(100vw-216px)]' : 'md:w-[calc(100vw-96px)]'
+            }  w-full transition-all duration-500`}
+          >
             <Header />
-            <main className="w-full h-[calc(100vh-87px)]">
-              <AppRoutes />
-            </main>
-          </div>
+            <AppRoutes />
+          </main>
         </div>
-      </BrowserRouter>
-    </Provider>
+      </div>
+    </BrowserRouter>
   );
 }
 
