@@ -1,5 +1,11 @@
+import Sidebar from "./layout/SideBar";
+
 const DashboardPage = () => {
-    return <></>
-}
+  return (
+    <>
+      <Sidebar />
+    </>
+  );
+};
 
 export default DashboardPage;
