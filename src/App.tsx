@@ -20,11 +20,13 @@ function App() {
           <main
             className={`h-[calc(100vh-87px)] ${
               isMenuOpen ? "md:ml-50" : "md:ml-20"
-            } ${
-              isMenuOpen
-                ? "md:w-[calc(100vw-216px)]"
-                : "md:w-[calc(100vw-96px)]"
-            }  w-full transition-all duration-500`}
+            } 
+              ${
+                isMenuOpen
+                  ? "md:w-[calc(100vw-216px)]"
+                  : "md:w-[calc(100vw-96px)]"
+              }  
+                w-full transition-all duration-300`}
           >
             {user ? <Header /> : <></>}
             <AppRoutes />

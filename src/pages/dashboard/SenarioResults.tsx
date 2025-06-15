@@ -15,7 +15,7 @@ const SenarioResults = () => {
   const [show, setShow] = useState<boolean>(true);
 
   return (
-    <div className="pt-4 md:pt-8 flex flex-col">
+    <div className="pt-4 md:pt-10 flex flex-col">
       <div className="flex justify-between">
         <div className="flex justify-between gap-2.5 items-center">
           <SparklesIcon className="text-[#DAFD7F]" />
@@ -42,7 +42,7 @@ const SenarioResults = () => {
           show ? "max-h-[1000px]" : "max-h-0"
         }`}
       >
-        <div className="flex flex-col gap-2.5 pt-5">
+        <div className="flex flex-col gap-2.5 pt-6">
           {results.length > 0 &&
             results.map((result: string, index: number) => (
               <div
