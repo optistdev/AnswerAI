@@ -15,11 +15,11 @@ const SenarioResults = () => {
   const [show, setShow] = useState<boolean>(true);
 
   return (
-    <div className="pt-4 md:pt-8 flex flex-col">
+    <div className="pt-4 md:pt-10 flex flex-col">
       <div className="flex justify-between">
         <div className="flex justify-between gap-2.5 items-center">
           <SparklesIcon className="text-[#DAFD7F]" />
-          <p className="text-xl md:text-2xl text-[#DCFF7F]">
+          <p className="text-lg md:text-2xl text-[#DCFF7F]">
             Best Scenario Results
           </p>
         </div>
@@ -42,14 +42,14 @@ const SenarioResults = () => {
           show ? "max-h-[1000px]" : "max-h-0"
         }`}
       >
-        <div className="flex flex-col gap-2.5 pt-5">
+        <div className="flex flex-col gap-2.5 pt-6">
           {results.length > 0 &&
             results.map((result: string, index: number) => (
               <div
                 key={`${result}-${index}`}
-                className="flex justify-between items-center text-[#C8E972] border-[#C8E972] border-[0.5px] rounded-[6px] py-4 px-6"
+                className="flex justify-between items-center text-[#C8E972] border-[#C8E972] border-[0.5px] rounded-[6px] py-2 px-3 md:py-4 md:px-6"
               >
-                <p>{result}</p>
+                <p className="text-[10px] sm:text-sm">{result}</p>
                 <Button
                   className="border-none bg-inherit"
                   onClick={() => console.log("")}
