@@ -1,41 +1,32 @@
-import { useState } from "react";
-import ChargingIcon from "../../assets/icons/ChargingIcon";
-import Button from "../../components/button";
-import RefreshIcon from "../../assets/icons/RefreshIcon";
-import UploadIcon from "../../assets/icons/UploadIcon";
-import SenarioResults from "./SenarioResults";
-
+import { useState } from 'react';
+import ChargingIcon from '../../assets/icons/ChargingIcon';
+import Button from '../../components/button';
+import RefreshIcon from '../../assets/icons/RefreshIcon';
+import UploadIcon from '../../assets/icons/UploadIcon';
+import SenarioResults from './SenarioResults';
+import EditVariables from './EditVariables';
 
 const DashboardPage = () => {
   const [opened, setOpened] = useState<boolean>(false);
 
   return (
     <div className="w-full min-h-full bg-[#161618] rounded-[5px] border-border-primary border pl-10 pr-9 pb-3">
+      {opened && <EditVariables />}
       <div className="md:flex justify-between w-full pt-4 md:pt-10 text-white">
         <div className="flex items-center justify-center gap-[13px]">
           <div>
             <ChargingIcon className="text-white text-xs md:text-lg" />
           </div>
-          <p className="text-2xl md:text-[32px] tracking-normal">
-            Charging Station
-          </p>
+          <p className="text-2xl md:text-[32px] tracking-normal">Charging Station</p>
         </div>
         <div className="flex items-center gap-3 mt-3 md:mt-0 justify-between md:justify-center">
           <Button
             className="h-10 w-10"
             icon={<RefreshIcon className="text-description" />}
-            onClick={() => console.log("refresh")}
+            onClick={() => console.log('refresh')}
           />
-          <Button
-            label="Edit Variables"
-            className="h-10 px-2"
-            onClick={() => setOpened(true)}
-          />
-          <Button
-            className="h-10 w-10"
-            icon={<UploadIcon className="" />}
-            onClick={() => console.log("upload")}
-          />
+          <Button label="Edit Variables" className="h-10 px-2" onClick={() => setOpened(true)} />
+          <Button className="h-10 w-10" icon={<UploadIcon className="" />} onClick={() => console.log('upload')} />
         </div>
       </div>
       <SenarioResults />
@@ -57,9 +48,7 @@ const DashboardPage = () => {
         {/* KPI Section */}
         <div className="xl:col-span-5 flex flex-col">
           <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-4">
-            <h2 className="text-2xl font-semibold">
-              Key Performance Indicators
-            </h2>
+            <h2 className="text-2xl font-semibold">Key Performance Indicators</h2>
             <button className="flex justify-center items-center gap-1 text-[14px] border border-neutral-600 h-8 w-[102px] rounded hover:bg-neutral-700">
               Variables <span className="text-lg">＋</span>
             </button>
@@ -68,28 +57,24 @@ const DashboardPage = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
             {[
               {
-                label: "Infrastructure Units",
-                description:
-                  "This describes variable two and what the shown data means.",
-                value: "€421.07",
+                label: 'Infrastructure Units',
+                description: 'This describes variable two and what the shown data means.',
+                value: '€421.07',
               },
               {
-                label: "Charging Growth",
-                description:
-                  "This describes variable two and what the shown data means.",
-                value: "33.07",
+                label: 'Charging Growth',
+                description: 'This describes variable two and what the shown data means.',
+                value: '33.07',
               },
               {
-                label: "Localization change",
-                description:
-                  "This describes variable two and what the shown data means.",
-                value: "21.9%",
+                label: 'Localization change',
+                description: 'This describes variable two and what the shown data means.',
+                value: '21.9%',
               },
               {
-                label: "Fleet growth",
-                description:
-                  "This describes variable two and what the shown data means.",
-                value: "7.03%",
+                label: 'Fleet growth',
+                description: 'This describes variable two and what the shown data means.',
+                value: '7.03%',
               },
             ].map((item, idx) => (
               <div
@@ -103,9 +88,7 @@ const DashboardPage = () => {
                   </div>
                   <span className="text-xs text-neutral-400">?</span>
                 </div>
-                <div className="text-[32px] font-semibold flex justify-end">
-                  {item.value}
-                </div>
+                <div className="text-[32px] font-semibold flex justify-end">{item.value}</div>
               </div>
             ))}
           </div>
@@ -114,9 +97,5 @@ const DashboardPage = () => {
     </div>
   );
 };
-
-
-
-
 
 export default DashboardPage;
