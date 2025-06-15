@@ -1,11 +1,6 @@
-import Header from "./layout/Header";
 
 const DashboardPage = () => {
-  return (
-    <>
-      <div>hello</div>
-    </>
-  );
+  return <div className="w-full"></div>;
 };
 
 export default DashboardPage;
