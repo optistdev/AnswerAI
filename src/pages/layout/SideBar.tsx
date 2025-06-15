@@ -9,6 +9,7 @@ import { ChevronLeft } from 'lucide-react';
 import { setIsMenuOpen } from '../../store/slices/loading.slice';
 import { signOut } from 'firebase/auth';
 import { auth } from '../../lib/firebase';
+import { useLocation } from 'react-router-dom';
 
 const sideBarItems = [
   {
@@ -23,7 +24,7 @@ const sideBarItems = [
   },
   {
     id: 'record',
-    label: 'Media Logs',
+    label: 'Logs',
     path: '/notfound',
   },
   {
@@ -39,8 +40,10 @@ const sideBarItems = [
 ];
 
 const Sidebar = () => {
-  const [selectedItem, setSeletedItem] = useState(() => {
-    return localStorage.getItem('sidebarSelected') || 'home';
+  const location = useLocation();
+  const selectedItemFromPath = sideBarItems.find((item) => location.pathname.startsWith(item.path))?.id;
+  const [selectedItem, setSelectedItem] = useState(() => {
+    return localStorage.getItem('sidebarSelected') || selectedItemFromPath || 'home';
   });
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   const profileMenuRef = useRef<HTMLDivElement>(null);
@@ -61,6 +64,18 @@ const Sidebar = () => {
     };
   }, []);
 
+  useEffect(() => {
+    if (selectedItemFromPath && selectedItemFromPath !== selectedItem) {
+      setSelectedItem(selectedItemFromPath);
+    }
+  }, [location.pathname]);
+
+  useEffect(() => {
+    if (selectedItemFromPath) {
+      localStorage.setItem('sidebarSelected', selectedItemFromPath);
+    }
+  }, [selectedItemFromPath]);
+
   const toggleSidebar = () => {
     console.log('here');
 
@@ -68,7 +83,7 @@ const Sidebar = () => {
   };
 
   const clickHander = (id: string, path: string) => {
-    setSeletedItem(id);
+    setSelectedItem(id);
     localStorage.setItem('sidebarSelected', id);
     navigate(path);
   };
@@ -89,7 +104,7 @@ const Sidebar = () => {
         fixed bg-background-primary
         ${isMenuOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
         flex flex-col
-        transition-[width] duration-500 ease-in-out 
+        transition-[width] duration-300 ease-in-out 
         ${isMenuOpen ? 'w-50' : 'w-20'} h-screen shrink-0
       `}
     >

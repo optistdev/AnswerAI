@@ -46,7 +46,7 @@ const SidebarItem = ({
         text-sm px-3 py-2 cursor-pointer mx-2 h-12
         ${active ? 'border-[#5f5f5f] rounded-xl border bg-[#292929]' : ''}
         ${isOpen ? 'justify-start w-40' : 'justify-center w-12'}
-        transition-[width] duration-500 ease-in-out 
+        transition-[width] duration-300 ease-in-out 
       `}
         onClick={() => onClick(id, path)}
       >
@@ -60,7 +60,7 @@ const SidebarItem = ({
             absolute left-full top-1/2 -translate-y-1/2 ml-2
             bg-[#292929] text-white text-xs px-2 py-1 rounded-md
             whitespace-nowrap opacity-0 group-hover:opacity-100
-            transition-opacity duration-200 z-50
+            transition-opacity duration-500 z-50
           "
         >
           {label}
