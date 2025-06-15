@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
 import MenuBarIcon from '../../assets/icons/MenuBarIcon';
 import SidebarItem from '../../components/menu-item';
@@ -7,6 +7,8 @@ import useAppDispatch from '../../hooks/global/useAppDispatch';
 import { useNavigate } from 'react-router-dom';
 import { ChevronLeft } from 'lucide-react';
 import { setIsMenuOpen } from '../../store/slices/loading.slice';
+import { signOut } from 'firebase/auth';
+import { auth } from '../../lib/firebase';
 
 const sideBarItems = [
   {
@@ -40,10 +42,24 @@ const Sidebar = () => {
   const [selectedItem, setSeletedItem] = useState(() => {
     return localStorage.getItem('sidebarSelected') || 'home';
   });
+  const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
+  const profileMenuRef = useRef<HTMLDivElement>(null);
   const { isMenuOpen } = useAppSelector((state) => state.loading);
   const dispatch = useAppDispatch();
-
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (profileMenuRef.current && !profileMenuRef.current.contains(event.target as Node)) {
+        setIsProfileMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   const toggleSidebar = () => {
     console.log('here');
@@ -57,19 +73,28 @@ const Sidebar = () => {
     navigate(path);
   };
 
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      navigate('/login');
+      localStorage.clear();
+    } catch (error) {
+      console.error('Logout failed:', error);
+    }
+  };
+
   return (
     <div
       className={`
-        h-screen border-r border-[#222324]  fixed md:relative bg-background-primary ${
-          !isMenuOpen ? 'hidden md:block' : ''
-        }
-        flex flex-col justify-between 
-        transition-[width] duration-500 ease-in-out overflow-hidden
-        ${isMenuOpen ? 'w-50' : 'w-20'} shrink-0
+        fixed md:relative bg-background-primary border-r border-[#222324]
+        ${isMenuOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
+        flex flex-col
+        transition-[width] duration-500 ease-in-out 
+        ${isMenuOpen ? 'w-50' : 'w-20'} h-screen shrink-0
       `}
     >
       {/* Top Section */}
-      <div className="flex flex-col items-center gap-7">
+      <div className="flex flex-grow flex-col items-center gap-7 ">
         <button
           onClick={toggleSidebar}
           className={`text-white mt-8 cursor-pointer w-full flex ${isMenuOpen ? 'justify-end' : 'justify-center'}`}
@@ -93,8 +118,36 @@ const Sidebar = () => {
       </div>
 
       {/* Bottom Profile */}
-      <div className="flex items-center justify-center mb-4">
-        <SidebarItem id="account" label="Profile" isOpen={isMenuOpen} path="/profile" onClick={clickHander} />
+      <div ref={profileMenuRef} className="relative flex items-center justify-center mb-4">
+        <SidebarItem
+          id="account"
+          label="Profile"
+          isOpen={isMenuOpen}
+          path="/profile"
+          onClick={() => setIsProfileMenuOpen((prev) => !prev)}
+        />
+
+        <div
+          className={`
+            absolute left-full bottom-3 ml-[-10px]
+            bg-[#292929] text-white text-sm rounded-lg shadow-lg z-50
+            flex flex-col min-w-[140px]
+            transform transition-all duration-300 ease-out
+            ${
+              isProfileMenuOpen
+                ? 'opacity-100 translate-y-0 scale-100 pointer-events-auto'
+                : 'opacity-0 translate-y-2 scale-95 pointer-events-none'
+            }
+          `}
+        >
+          {/* ▼ Triangle on bottom-left */}
+          <div className="absolute left-[-6px] bottom-3 w-3 h-3 bg-[#292929] rotate-45 z-[-1]" />
+
+          <button className="px-4 py-2 hover:bg-[#3a3a3a] text-left cursor-pointer">My Account</button>
+          <button className="px-4 py-2 hover:bg-[#3a3a3a] text-left cursor-pointer" onClick={handleLogout}>
+            Logout
+          </button>
+        </div>
       </div>
     </div>
   );
