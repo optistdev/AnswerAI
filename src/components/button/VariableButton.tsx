@@ -9,10 +9,10 @@ type VariableButtonProps = {
 
 export const VariableButton = ({ label, selected = false, onClick }: VariableButtonProps) => {
   return (
-    <div className="relative group">
+    <div className="relative group cursor-pointer">
       <button
         onClick={onClick}
-        className={`flex items-center gap-[15px] px-4 py-1 rounded-full border text-[15px] tracking-[0%] leading-[150%] font-normal transition-colors
+        className={`flex items-center gap-[15px] px-4 py-1 rounded-full border text-[15px] tracking-[0%] leading-[150%] font-normal transition-colors cursor-pointer
           ${
             selected ? 'bg-[#282E16] text-lime-400 border-[#C9FF3B]' : 'bg-[#5959594D] text-gray-300 border-[#EEEEEE]'
           }`}

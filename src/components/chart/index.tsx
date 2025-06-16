@@ -53,10 +53,8 @@ const options = {
         displayFormats: { month: 'MMM' },
       },
       grid: {
-        color: (ctx: any) =>
-          ctx.tick?.label === 'Jul' ? '#C8E972' : '#222',
-        borderDash: (ctx: any) =>
-          ctx.tick?.label === 'Jul' ? [4, 4] : [],
+        color: (ctx: any) => (ctx.tick?.label === 'Jul' ? '#C8E972' : '#222'),
+        borderDash: (ctx: any) => (ctx.tick?.label === 'Jul' ? [4, 4] : []),
         drawTicks: true,
         drawOnChartArea: true,
       },
