@@ -97,51 +97,52 @@ const Sidebar = () => {
   };
 
   return (
-    <div
-      className={`
-        fixed bg-background-primary
-        ${isMenuOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
-        flex flex-col
-        transition-[width] duration-300 ease-in-out 
-        ${isMenuOpen ? 'w-50' : 'w-20'} h-screen shrink-0
-      `}
-    >
-      {/* Top Section */}
-      <div className="flex flex-grow flex-col items-center gap-7 ">
-        <button
-          onClick={toggleSidebar}
-          className={`text-white mt-8 cursor-pointer w-full flex ${isMenuOpen ? 'justify-end' : 'justify-center'}`}
-        >
-          {!isMenuOpen ? <MenuBarIcon className="w-5 h-5" /> : <ChevronLeft className="w-5 h-5 mr-2" />}
-        </button>
-
-        <div className={`flex flex-col gap-5 w-full items-center ${isMenuOpen && 'items-start'}`}>
-          {sideBarItems.map((item) => (
-            <SidebarItem
-              id={item.id}
-              key={item.id}
-              label={item.label}
-              path={item.path}
-              isOpen={isMenuOpen}
-              active={selectedItem === item.id}
-              onClick={() => clickHander(item.id, item.path)}
-            />
-          ))}
-        </div>
-      </div>
-
-      {/* Bottom Profile */}
-      <div ref={profileMenuRef} className="relative flex items-center justify-center mb-4">
-        <SidebarItem
-          id="account"
-          label="Profile"
-          isOpen={isMenuOpen}
-          path="/profile"
-          onClick={() => setIsProfileMenuOpen((prev) => !prev)}
-        />
-
+    <div>
+      <div className="relative z-50">
         <div
           className={`
+            fixed top-0 left-0 h-screen bg-background-primary
+            flex flex-col shrink-0
+            transition-all duration-300 ease-in-out
+            ${isMenuOpen ? 'w-50 translate-x-0' : 'w-20 -translate-x-full md:translate-x-0'}
+          `}
+        >
+          {/* Top Section */}
+          <div className="flex flex-grow flex-col items-center gap-7 ">
+            <button
+              onClick={toggleSidebar}
+              className={`text-white mt-8 cursor-pointer w-full flex ${isMenuOpen ? 'justify-end' : 'justify-center'}`}
+            >
+              {!isMenuOpen ? <MenuBarIcon className="w-5 h-5" /> : <ChevronLeft className="w-5 h-5 mr-2" />}
+            </button>
+
+            <div className={`flex flex-col gap-5 w-full items-center ${isMenuOpen && 'items-start'}`}>
+              {sideBarItems.map((item) => (
+                <SidebarItem
+                  id={item.id}
+                  key={item.id}
+                  label={item.label}
+                  path={item.path}
+                  isOpen={isMenuOpen}
+                  active={selectedItem === item.id}
+                  onClick={() => clickHander(item.id, item.path)}
+                />
+              ))}
+            </div>
+          </div>
+
+          {/* Bottom Profile */}
+          <div ref={profileMenuRef} className="relative flex items-center justify-center mb-4">
+            <SidebarItem
+              id="account"
+              label="Profile"
+              isOpen={isMenuOpen}
+              path="/profile"
+              onClick={() => setIsProfileMenuOpen((prev) => !prev)}
+            />
+
+            <div
+              className={`
             absolute left-full bottom-3 ml-[-10px]
             bg-[#292929] text-white text-sm rounded-lg shadow-lg z-50
             flex flex-col min-w-[140px]
@@ -152,16 +153,27 @@ const Sidebar = () => {
                 : 'opacity-0 translate-y-2 scale-95 pointer-events-none'
             }
           `}
-        >
-          {/* ▼ Triangle on bottom-left */}
-          <div className="absolute left-[-6px] bottom-3 w-3 h-3 bg-[#292929] rotate-45 z-[-1]" />
+            >
+              {/* ▼ Triangle on bottom-left */}
+              <div className="absolute left-[-6px] bottom-3 w-3 h-3 bg-[#292929] rotate-45 z-[-1]" />
 
-          <button className="px-4 py-2 hover:bg-[#3a3a3a] text-left cursor-pointer">My Account</button>
-          <button className="px-4 py-2 hover:bg-[#3a3a3a] text-left cursor-pointer" onClick={handleLogout}>
-            Logout
-          </button>
+              <button className="px-4 py-2 hover:bg-[#3a3a3a] text-left cursor-pointer">My Account</button>
+              <button className="px-4 py-2 hover:bg-[#3a3a3a] text-left cursor-pointer" onClick={handleLogout}>
+                Logout
+              </button>
+            </div>
+          </div>
         </div>
       </div>
+      <div
+        className={`
+          fixed top-0 left-0 w-screen h-screen z-49
+          bg-black/40 backdrop-blur-sm
+          transition-opacity duration-300 ease-in-out
+          ${isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}
+          md:hidden
+        `}
+      />
     </div>
   );
 };
