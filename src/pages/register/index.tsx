@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { registerWithEmail } from '../../services/authService';
+import { registerWithEmail } from '../../utils/authService';
 import { useNavigate } from 'react-router-dom';
 import Input from '../../components/input';
-import Button from '../../components/auth-button';
+import Button from '../../components/button/AuthButton';
 import { Link } from 'react-router-dom';
 import { toast } from 'sonner';
 import { signOut } from 'firebase/auth';
-import { auth } from '../../lib/firebase';
+import { auth } from '../../utils/firebase';
 import { setLoading } from '../../store/slices/loading.slice';
 import useAppDispatch from '../../hooks/global/useAppDispatch';
 
@@ -87,6 +87,7 @@ const RegisterPage: React.FC = () => {
     }
     dispatch(setLoading(false));
   };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({

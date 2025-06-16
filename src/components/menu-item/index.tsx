@@ -1,9 +1,5 @@
-import HomeIcon from '../../assets/icons/HomeIcon';
-import BellIcon from '../../assets/icons/BellIcon';
-import CloudIcon from '../../assets/icons/CloudIcon';
-import RecordIcon from '../../assets/icons/RecordIcon';
-import SettingIcon from '../../assets/icons/SettingIcon';
-import AccountIcon from '../../assets/icons/AccountIcon';
+import {AccountIcon, SettingIcon, RecordIcon, CloudIcon, BellIcon, HomeIcon} from "../../utils/icons"
+
 const SidebarItem = ({
   label,
   isOpen,

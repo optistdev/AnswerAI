@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { loginWithEmail, loginWithGoogle } from '../../services/authService';
+import { loginWithEmail, loginWithGoogle } from '../../utils/authService';
 import { useNavigate } from 'react-router-dom';
 import Input from '../../components/input';
-import Button from '../../components/auth-button';
+import Button from '../../components/button/AuthButton';
 import { Link } from 'react-router-dom';
 import { toast } from 'sonner';
 import useAppDispatch from '../../hooks/global/useAppDispatch';

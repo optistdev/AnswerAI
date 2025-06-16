@@ -8,7 +8,7 @@ import {
   linkWithCredential,
 } from 'firebase/auth';
 import type { UserCredential } from 'firebase/auth';
-import { auth } from '../lib/firebase';
+import { auth } from './firebase';
 
 export const loginWithGoogle = async (): Promise<UserCredential> => {
   const provider = new GoogleAuthProvider();

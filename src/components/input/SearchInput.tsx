@@ -1,5 +1,6 @@
 import React from "react";
-import { Icons } from "../../utils/icons";
+import { Search } from "lucide-react";
+
 interface InputProps {
   className: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -13,7 +14,7 @@ const SearchInput: React.FC<InputProps> = ({
     <div
       className={`relative ${className}`}
     >
-      <Icons.Search
+      <Search
         className="absolute left-3 top-1/2 -translate-y-1/2 text-white"
         size={16}
       />

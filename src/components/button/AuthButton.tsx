@@ -6,7 +6,7 @@ interface ButtonProps {
   onClick?: () => void;
 }
 
-const CustomizedButton = ({ className, label, type, img, onClick }: ButtonProps) => {
+const AuthButton = ({ className, label, type, img, onClick }: ButtonProps) => {
   return (
     <div className={`relative flex items-center ${className}`}>
       <button
@@ -24,4 +24,4 @@ const CustomizedButton = ({ className, label, type, img, onClick }: ButtonProps)
   );
 };
 
-export default CustomizedButton;
+export default AuthButton;

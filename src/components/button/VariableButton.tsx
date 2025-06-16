@@ -1,5 +1,5 @@
-import { Icons } from '../../utils/icons';
-import SparklesIcon from '../../assets/icons/SparklesIcon';
+import { Check, Plus } from "lucide-react";
+import { SparklesIcon } from "../../utils/icons";
 
 type VariableButtonProps = {
   label: string;
@@ -24,7 +24,9 @@ export const VariableButton = ({
         onClick={onClick}
         className={`flex items-center gap-[15px] px-4 py-1 rounded-full border text-[15px] tracking-[0%] leading-[150%] font-normal transition-colors cursor-pointer
           ${
-            selected ? 'bg-[#282E16] text-lime-400 border-[#C9FF3B]' : 'bg-[#5959594D] text-gray-300 border-[#EEEEEE]'
+            selected
+              ? "bg-[#282E16] text-lime-400 border-[#C9FF3B]"
+              : "bg-[#5959594D] text-gray-300 border-[#EEEEEE]"
           }`}
         onMouseEnter={() => onMouseEnter(desc, label)}
         onMouseLeave={onMouseLeave}
@@ -34,7 +36,7 @@ export const VariableButton = ({
           <span className="text-xs">
             <SparklesIcon className="w-3 h-3" selected={selected} />
           </span>
-          <span>{selected ? <Icons.Check size={14} /> : <Icons.Plus size={14} />}</span>
+          <span>{selected ? <Check size={14} /> : <Plus size={14} />}</span>
         </div>
       </button>
 

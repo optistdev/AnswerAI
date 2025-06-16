@@ -1,17 +1,13 @@
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { Search, X } from "lucide-react";
-import MenuBarIcon from "../../assets/icons/MenuBarIcon";
+
+import { MenuBarIcon } from "../../utils/icons";
 import SearchInput from "../../components/input/SearchInput";
 import Button from "../../components/button";
 import useAppDispatch from "../../hooks/global/useAppDispatch";
 import { setIsMenuOpen } from "../../store/slices/loading.slice";
-
-const tabs = [
-  { name: "Charging Stations", key: "charging" },
-  { name: "Fleet Sizing", key: "fleet" },
-  { name: "Parking", key: "parking" },
-];
+import { dashboardTabs as tabs } from "../../utils/data";
 
 const Header = () => {
   const location = useLocation();

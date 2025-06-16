@@ -1,70 +1,19 @@
-import { useRef } from 'react';
-import { X, Info } from 'lucide-react';
+import { useRef, useState } from 'react';
+import { X, Info, ChevronUp, ChevronDown } from 'lucide-react';
+
 import SearchInput from '../../components/input/SearchInput';
 import Button from '../../components/button';
-import RefreshIcon from '../../assets/icons/RefreshIcon';
-import SparklesIcon from '../../assets/icons/SparklesIcon';
-import { ChevronDown, ChevronUp } from 'lucide-react';
-import { useState } from 'react';
 import VariableButton from '../../components/button/VariableButton';
 import useAppDispatch from '../../hooks/global/useAppDispatch';
 import useAppSelector from '../../hooks/global/useAppSelector';
 import { setSelectedVariables } from '../../store/slices/variables.slice';
+import { variables } from '../../utils/data';
+import {SparklesIcon,RefreshIcon} from "../../utils/icons"
+
 interface EditVariablesProps {
   onClick: () => void;
   className: String;
 }
-
-const variables = [
-  {
-    id: 'category1',
-    label: 'Variable Category 1',
-    variables: [
-      {
-        id: 'carbon1',
-        label: 'Carbon 1',
-        description:
-          "But what truly sets Switch apart is its versatility. It can be used as a scooter, a bike, or even a skateboard, making it suitable for people of all ages. Whether you're a student, a professional, or a senior citizen, Switch adapts to your needs and lifestyle.",
-      },
-      {
-        id: 'co2_distribution',
-        label: 'Co2 Distribution',
-        description:
-          "But what truly sets Switch apart is its versatility. It can be used as a scooter, a bike, or even a skateboard, making it suitable for people of all ages. Whether you're a student, a professional, or a senior citizen, Switch adapts to your needs and lifestyle.",
-      },
-      {
-        id: 'fleet_size',
-        label: 'Fleet Sizing',
-        description:
-          "But what truly sets Switch apart is its versatility. It can be used as a scooter, a bike, or even a skateboard, making it suitable for people of all ages. Whether you're a student, a professional, or a senior citizen, Switch adapts to your needs and lifestyle.",
-      },
-    ],
-  },
-  {
-    id: 'category2',
-    label: 'Variable Category 2',
-    variables: [
-      {
-        id: 'parking_rate',
-        label: 'Parking Rate',
-        description:
-          "But what truly sets Switch apart is its versatility. It can be used as a scooter, a bike, or even a skateboard, making it suitable for people of all ages. Whether you're a student, a professional, or a senior citizen, Switch adapts to your needs and lifestyle.",
-      },
-      {
-        id: 'border_rate',
-        label: 'Border Rate',
-        description:
-          "But what truly sets Switch apart is its versatility. It can be used as a scooter, a bike, or even a skateboard, making it suitable for people of all ages. Whether you're a student, a professional, or a senior citizen, Switch adapts to your needs and lifestyle.",
-      },
-      {
-        id: 'request_rate',
-        label: 'Request Rate',
-        description:
-          "But what truly sets Switch apart is its versatility. It can be used as a scooter, a bike, or even a skateboard, making it suitable for people of all ages. Whether you're a student, a professional, or a senior citizen, Switch adapts to your needs and lifestyle.",
-      },
-    ],
-  },
-];
 
 const EditVariables = ({ onClick, className }: EditVariablesProps) => {
   const [showPrimary, setShowPrimary] = useState(true);

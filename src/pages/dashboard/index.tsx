@@ -1,35 +1,15 @@
 import { useState } from 'react';
-import ChargingIcon from '../../assets/icons/ChargingIcon';
-import RefreshIcon from '../../assets/icons/RefreshIcon';
-import UploadIcon from '../../assets/icons/UploadIcon';
 import { CircleHelp } from 'lucide-react';
+
 import Button from '../../components/button';
+import ChartView from '../../components/chart';
 import SenarioResults from './SenarioResults';
 import EditVariables from './EditVariables';
-import ChartView from '../../components/chart';
+import { KPI_CARDS } from '../../utils/data';
+import {UploadIcon, RefreshIcon, ChargingIcon} from "../../utils/icons"
 
-const KPI_CARDS = [
-  {
-    label: 'Infrastructure Units',
-    description: 'This describes variable two and what the shown data means.',
-    value: '€421.07',
-  },
-  {
-    label: 'Charging Growth',
-    description: 'This describes variable two and what the shown data means.',
-    value: '33.07',
-  },
-  {
-    label: 'Localization change',
-    description: 'This describes variable two and what the shown data means.',
-    value: '21.9%',
-  },
-  {
-    label: 'Fleet growth',
-    description: 'This describes variable two and what the shown data means.',
-    value: '7.03%',
-  },
-];
+
+
 
 const DashboardPage = () => {
   const [opened, setOpened] = useState(false);

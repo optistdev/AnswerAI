@@ -1,14 +1,9 @@
 import { useState } from "react";
-import SparklesIcon from "../../assets/icons/SparklesIcon";
 import { ChevronDown, ChevronUp } from "lucide-react";
-import DotsIcon from "../../assets/icons/DotsIcon";
+
 import Button from "../../components/button";
-
-const results = [
-  "The best found configuratioin based on profit is characterized by 11 zones (max) with charging stations and 48 total number of poles.",
-  "The best found configuration based on satisfied demand is characterized by 11 zones (max) with charging stations and 48 total number of poles.",
-];
-
+import { senarioResults as results } from "../../utils/data";
+import {SparklesIcon,DotsIcon} from "../../utils/icons"
 
 
 const SenarioResults = () => {
