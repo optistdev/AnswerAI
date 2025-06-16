@@ -125,7 +125,12 @@ const Sidebar = () => {
                   path={item.path}
                   isOpen={isMenuOpen}
                   active={selectedItem === item.id}
-                  onClick={() => clickHander(item.id, item.path)}
+                  onClick={() => {
+                    if (window.innerWidth < 768) {
+                      dispatch(setIsMenuOpen(false));
+                    }
+                    clickHander(item.id, item.path);
+                  }}
                 />
               ))}
             </div>
