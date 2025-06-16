@@ -77,7 +77,7 @@ const DashboardPage = () => {
                 <option>Unsatisfied Demand %</option>
               </select>
             </div>
-            {/* <ChartView /> */}
+            <ChartView />
           </div>
         </div>
 
