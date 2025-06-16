@@ -47,9 +47,8 @@ const LoginPage: React.FC = () => {
     if (hasError) return;
 
     try {
-      const result = await loginWithEmail(formData.email, formData.password);
+      await loginWithEmail(formData.email, formData.password);
       toast.success('Logged in successfully!');
-      console.log(result);
       navigate('/dashboard');
     } catch (err: any) {
       console.log(err.code || 'Log in failed.');
@@ -69,9 +68,8 @@ const LoginPage: React.FC = () => {
   };
   const googleAuthHandler = async () => {
     try {
-      const result = await loginWithGoogle();
+      await loginWithGoogle();
       toast.success('Logged in successfully!');
-      console.log(result);
       navigate('/dashboard');
     } catch (err: any) {
       console.error('Google login failed:', err.message);

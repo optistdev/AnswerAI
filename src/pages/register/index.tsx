@@ -60,8 +60,7 @@ const RegisterPage: React.FC = () => {
     if (hasError) return;
 
     try {
-      const result = await registerWithEmail(formData.email, formData.password);
-      console.log(result);
+      await registerWithEmail(formData.email, formData.password);
       await signOut(auth);
       toast.success('Registration successful!', {
         description: 'You can now log in.',
