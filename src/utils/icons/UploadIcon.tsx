@@ -1,6 +1,4 @@
-interface UploadIconProps extends React.SVGProps<SVGSVGElement> {
-  className: string;
-}
+interface UploadIconProps extends React.SVGProps<SVGSVGElement> {}
 
 const UploadIcon = ({ className }: UploadIconProps) => (
   <svg

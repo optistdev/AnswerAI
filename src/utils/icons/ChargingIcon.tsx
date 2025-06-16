@@ -1,6 +1,4 @@
-interface ChargingIconProps extends React.SVGProps<SVGSVGElement> {
-  className: string;
-}
+interface ChargingIconProps extends React.SVGProps<SVGSVGElement> {}
 
 const ChargingIcon = ({ className }: ChargingIconProps) => (
   <svg

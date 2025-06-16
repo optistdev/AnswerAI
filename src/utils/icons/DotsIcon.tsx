@@ -1,6 +1,4 @@
-interface DotsIconProps extends React.SVGProps<SVGSVGElement> {
-  className: string;
-}
+interface DotsIconProps extends React.SVGProps<SVGSVGElement> {}
 
 const DotsIcon = ({ className }: DotsIconProps) => (
   <svg

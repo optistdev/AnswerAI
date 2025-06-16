@@ -12,6 +12,8 @@ import useAppDispatch from '../../hooks/global/useAppDispatch';
 
 const RegisterPage: React.FC = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -24,16 +26,48 @@ const RegisterPage: React.FC = () => {
     repassword: '',
   });
 
-  const dispatch = useAppDispatch();
+  // Handle form input change with inline validation
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
 
+    switch (name) {
+      case 'email':
+        if (!value.trim()) {
+          setFormErrors((prev) => ({ ...prev, email: 'Email is required.' }));
+        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+          setFormErrors((prev) => ({ ...prev, email: 'Enter a valid email.' }));
+        } else {
+          setFormErrors((prev) => ({ ...prev, email: '' }));
+        }
+        break;
+      case 'password':
+        if (!value.trim()) {
+          setFormErrors((prev) => ({ ...prev, password: 'Password is required.' }));
+        } else if (value.length < 6) {
+          setFormErrors((prev) => ({ ...prev, password: 'At least 6 characters.' }));
+        } else {
+          setFormErrors((prev) => ({ ...prev, password: '' }));
+        }
+        break;
+      case 'repassword':
+        if (!value.trim()) {
+          setFormErrors((prev) => ({ ...prev, repassword: 'Please confirm password.' }));
+        } else if (value !== formData.password) {
+          setFormErrors((prev) => ({ ...prev, repassword: 'Passwords do not match.' }));
+        } else {
+          setFormErrors((prev) => ({ ...prev, repassword: '' }));
+        }
+        break;
+    }
+  };
+
+  // Form submit handler with Firebase registration
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    setFormErrors({
-      email: '',
-      password: '',
-      repassword: '',
-    });
+    // Reset error messages
+    setFormErrors({ email: '', password: '', repassword: '' });
 
     let hasError = false;
 
@@ -66,13 +100,13 @@ const RegisterPage: React.FC = () => {
     try {
       dispatch(setLoading(true));
       await registerWithEmail(formData.email, formData.password);
-      await signOut(auth);
+      await signOut(auth); // Enforce re-authentication on login
       toast.success('Registration successful!', {
         description: 'You can now log in.',
       });
       navigate('/login');
     } catch (err: any) {
-      console.log(err.message || 'Registration failed.');
+      console.error(err.message || 'Registration failed.');
       const code = err.code;
 
       if (code === 'auth/email-already-in-use') {
@@ -84,53 +118,15 @@ const RegisterPage: React.FC = () => {
           description: err.message || 'Something went wrong.',
         });
       }
-    }
-    dispatch(setLoading(false));
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-    switch (name) {
-      case 'email':
-        if (!value.trim()) {
-          setFormErrors((prev) => ({ ...prev, email: 'Email is required.' }));
-        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
-          setFormErrors((prev) => ({ ...prev, email: 'Enter a valid email.' }));
-        } else {
-          setFormErrors((prev) => ({ ...prev, email: '' }));
-        }
-        break;
-
-      case 'password':
-        if (!value.trim()) {
-          setFormErrors((prev) => ({ ...prev, password: 'Password is required.' }));
-        } else if (value.length < 6) {
-          setFormErrors((prev) => ({ ...prev, password: 'At least 6 characters.' }));
-        } else {
-          setFormErrors((prev) => ({ ...prev, password: '' }));
-        }
-        break;
-
-      case 'repassword':
-        if (!value.trim()) {
-          setFormErrors((prev) => ({ ...prev, repassword: 'Please confirm password.' }));
-        } else if (value !== formData.password) {
-          setFormErrors((prev) => ({ ...prev, repassword: 'Passwords do not match.' }));
-        } else {
-          setFormErrors((prev) => ({ ...prev, repassword: '' }));
-        }
-        break;
+    } finally {
+      dispatch(setLoading(false));
     }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center px-4">
-      <div className=" p-6 rounded-lg shadow-md w-full max-w-md">
-        <img src="/images/logo.png" className="w-full h-30 object-cover p-4 mb-8"></img>
+      <div className="p-6 rounded-lg shadow-md w-full max-w-md">
+        <img src="/images/logo.png" className="w-full h-30 object-cover p-4 mb-8" alt="Logo" />
         <form onSubmit={handleSubmit} className="space-y-5">
           <Input
             name="email"

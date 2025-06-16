@@ -16,9 +16,10 @@ import "chartjs-adapter-date-fns";
 import { useState, useMemo, useRef, useEffect } from "react";
 import { startOfWeek } from "date-fns";
 import ChartTooltip from "./Tooltip";
+import { chartData } from "../../utils/data";
 
 // ----------------------
-//Plugin: Hover Dashed Line
+// Plugin: Hover Dashed Line on Hovered Point
 // ----------------------
 const hoverDashedLinePlugin = {
   id: "hoverDashedLinePlugin" as const,
@@ -42,7 +43,7 @@ const hoverDashedLinePlugin = {
 };
 
 // ----------------------
-//Plugin: Vertical Underline Grid
+// Plugin: Vertical Underline Grid (Weekly Interpolation)
 // ----------------------
 const underLineGridPlugin = {
   id: "underLineGridPlugin" as const,
@@ -61,11 +62,7 @@ const underLineGridPlugin = {
     ctx.strokeStyle = "rgba(200, 233, 114, 0.12)";
     ctx.lineWidth = 3.5;
 
-    for (
-      let guard = 0;
-      guard < 100 && currentDate <= new Date(xScale.max);
-      guard++
-    ) {
+    for (let guard = 0; guard < 100 && currentDate <= new Date(xScale.max); guard++) {
       const x = xScale.getPixelForValue(currentDate);
       if (Math.abs(x - lastX) >= 20) {
         for (let i = 0; i < points.length - 1; i++) {
@@ -90,7 +87,7 @@ const underLineGridPlugin = {
 };
 
 // ----------------------
-//Plugin: "Now" Marker with Label and Dot
+// Plugin: "Now" Marker with Label and Dot
 // ----------------------
 const nowMarkerPlugin = {
   id: "nowMarkerPlugin" as const,
@@ -106,6 +103,7 @@ const nowMarkerPlugin = {
     const points = chart.getDatasetMeta(0).data;
     let y: number | null = null;
 
+    // Interpolate Y for "Now"
     for (let i = 0; i < points.length - 1; i++) {
       const p1 = points[i];
       const p2 = points[i + 1];
@@ -115,6 +113,7 @@ const nowMarkerPlugin = {
       }
     }
 
+    // Draw vertical line
     ctx.save();
     ctx.setLineDash([4, 4]);
     ctx.strokeStyle = "#C8E972";
@@ -125,6 +124,7 @@ const nowMarkerPlugin = {
     ctx.stroke();
     ctx.restore();
 
+    // Draw circle + "Now" label
     if (y !== null) {
       ctx.beginPath();
       ctx.arc(nowX, y, 5, 0, 2 * Math.PI);
@@ -142,7 +142,7 @@ const nowMarkerPlugin = {
   },
 };
 
-//Register all plugins and chart components
+// Register plugins and chart components globally
 ChartJS.register(
   LineController,
   LineElement,
@@ -158,29 +158,14 @@ ChartJS.register(
 );
 
 // ----------------------
-//Line Chart Data
+// Chart Dataset
 // ----------------------
 const data: ChartData<"line"> = {
-  labels: [
-    "2025-01-20",
-    "2025-04-01",
-    "2025-05-20",
-    "2025-06-15",
-    "2025-07-01",
-    "2025-07-20",
-    "2025-08-01",
-    "2025-09-01",
-    "2025-09-20",
-    "2025-11-01",
-    "2025-12-01",
-  ],
+  labels: chartData.map((data) => data.date),
   datasets: [
     {
       label: "Revenue",
-      data: [
-        45000, 20000, 50000, 44000, 90000, 60000, 60000, 30000, 50000, 58000,
-        64000,
-      ],
+      data: chartData.map((data) => data.value),
       borderColor: "#C8E972",
       borderWidth: 2,
       tension: 0,
@@ -195,7 +180,7 @@ const data: ChartData<"line"> = {
 };
 
 // ----------------------
-//Chart Component
+// Chart Component
 // ----------------------
 export default function CustomLineChart() {
   const [tooltipState, setTooltipState] = useState({
@@ -207,6 +192,7 @@ export default function CustomLineChart() {
 
   const containerRef = useRef<HTMLDivElement>(null);
 
+  // Hide custom tooltip on mouse/pointer leave or click outside
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
@@ -217,16 +203,12 @@ export default function CustomLineChart() {
     const handleMouseLeave = () => hideTooltip();
 
     const handleWindowMouseOut = (e: MouseEvent) => {
-      if (
-        !e.relatedTarget ||
-        (e.relatedTarget as HTMLElement).nodeName === "HTML"
-      ) {
+      if (!e.relatedTarget || (e.relatedTarget as HTMLElement).nodeName === "HTML") {
         hideTooltip();
       }
     };
 
     const handlePointerDown = (e: PointerEvent) => {
-      // Hide tooltip if user tapped/clicked outside chart container
       if (!container.contains(e.target as Node)) {
         hideTooltip();
       }
@@ -234,7 +216,7 @@ export default function CustomLineChart() {
 
     container.addEventListener("mouseleave", handleMouseLeave);
     window.addEventListener("mouseout", handleWindowMouseOut);
-    document.addEventListener("pointerdown", handlePointerDown, true); // 🔥 KEY FIX
+    document.addEventListener("pointerdown", handlePointerDown, true);
 
     return () => {
       container.removeEventListener("mouseleave", handleMouseLeave);
@@ -243,7 +225,7 @@ export default function CustomLineChart() {
     };
   }, []);
 
-  //Memoized chart options
+  // Chart options with custom tooltip handler
   const options = useMemo<ChartOptions<"line">>(
     () => ({
       responsive: true,
@@ -290,7 +272,7 @@ export default function CustomLineChart() {
       },
       plugins: {
         tooltip: {
-          enabled: false, // disable native tooltip
+          enabled: false, // disable default tooltip
           external: (context) => {
             const tooltipModel = context.tooltip;
             const point = tooltipModel.dataPoints?.[0];
@@ -318,7 +300,7 @@ export default function CustomLineChart() {
 
   return (
     <div ref={containerRef} className="p-4 rounded-md">
-      <div className="text-white w-full h-[150px] sm:h-50 md:h-[340px]">
+      <div className="text-white w-full h-[150px] sm:h-50 md:h-[345px]">
         <Line data={data} options={options} />
         {tooltipState.visible && <ChartTooltip {...tooltipState} />}
       </div>

@@ -2,8 +2,8 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
 interface LoadingState {
-  isLoading: Boolean;
-  isMenuOpen: Boolean;
+  isLoading: boolean;
+  isMenuOpen: boolean;
 }
 
 const initialState: LoadingState = {
@@ -15,10 +15,10 @@ export const loadingSlice = createSlice({
   name: 'loading',
   initialState,
   reducers: {
-    setLoading: (state, action: PayloadAction<Boolean>) => {
+    setLoading: (state, action: PayloadAction<boolean>) => {
       state.isLoading = action.payload;
     },
-    setIsMenuOpen: (state, action: PayloadAction<Boolean>) => {
+    setIsMenuOpen: (state, action: PayloadAction<boolean>) => {
       state.isMenuOpen = action.payload;
     },
   },

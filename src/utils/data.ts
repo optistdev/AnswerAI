@@ -77,6 +77,19 @@ export const senarioResults = [
   "The best found configuration based on satisfied demand is characterized by 11 zones (max) with charging stations and 48 total number of poles.",
 ];
 
+export const chartData = [
+  { date: "2025-01-20", value: 45000 },
+  { date: "2025-04-01", value: 20000 },
+  { date: "2025-05-20", value: 50000 },
+  { date: "2025-06-15", value: 44000 },
+  { date: "2025-07-01", value: 90000 },
+  { date: "2025-07-20", value: 60000 },
+  { date: "2025-09-01", value: 60000 },
+  { date: "2025-09-20", value: 30000 },
+  { date: "2025-11-01", value: 50000 },
+  { date: "2025-12-01", value: 58000 },
+];
+
 export const dashboardTabs = [
   { name: "Charging Stations", key: "charging" },
   { name: "Fleet Sizing", key: "fleet" },
@@ -85,28 +98,28 @@ export const dashboardTabs = [
 
 export const sideBarItems = [
   {
-    id: 'home',
-    label: 'Home',
-    path: '/dashboard',
+    id: "home",
+    label: "Home",
+    path: "/dashboard",
   },
   {
-    id: 'bell',
-    label: 'Alerts',
-    path: '/notfound',
+    id: "bell",
+    label: "Alerts",
+    path: "/notfound",
   },
   {
-    id: 'record',
-    label: 'Logs',
-    path: '/notfound',
+    id: "record",
+    label: "Logs",
+    path: "/notfound",
   },
   {
-    id: 'cloud',
-    label: 'Upload',
-    path: '/notfound',
+    id: "cloud",
+    label: "Upload",
+    path: "/notfound",
   },
   {
-    id: 'setting',
-    label: 'Settings',
-    path: '/notfound',
+    id: "setting",
+    label: "Settings",
+    path: "/notfound",
   },
 ];
