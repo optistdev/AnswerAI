@@ -49,7 +49,7 @@ const SenarioResults = () => {
                 key={`${result}-${index}`}
                 className="flex justify-between items-center text-[#C8E972] border-[#C8E972] border-[0.5px] rounded-[6px] py-2 px-3 md:py-4 md:px-6"
               >
-                <p className="text-[10px] sm:text-sm">{result}</p>
+                <p className="text-[16px]">{result}</p>
                 <Button
                   className="border-none bg-inherit"
                   onClick={() => console.log("")}

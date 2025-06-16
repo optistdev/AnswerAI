@@ -51,7 +51,7 @@ const DashboardPage = () => {
         <div className="flex w-full md:w-auto gap-3 justify-between">
           <Button
             className="h-10 w-10"
-            icon={<RefreshIcon className="text-description" />}
+            icon={<RefreshIcon className="text-description" active={false}/>}
             onClick={() => console.log('refresh')}
           />
           <Button label="Edit Variables" className="h-10 px-3" onClick={() => setOpened(true)} />

@@ -61,7 +61,11 @@ const underLineGridPlugin = {
     ctx.strokeStyle = "rgba(200, 233, 114, 0.12)";
     ctx.lineWidth = 3.5;
 
-    for (let guard = 0; guard < 100 && currentDate <= new Date(xScale.max); guard++) {
+    for (
+      let guard = 0;
+      guard < 100 && currentDate <= new Date(xScale.max);
+      guard++
+    ) {
       const x = xScale.getPixelForValue(currentDate);
       if (Math.abs(x - lastX) >= 20) {
         for (let i = 0; i < points.length - 1; i++) {
@@ -158,14 +162,25 @@ ChartJS.register(
 // ----------------------
 const data: ChartData<"line"> = {
   labels: [
-    "2025-01-20", "2025-04-01", "2025-05-20", "2025-06-15",
-    "2025-07-01", "2025-07-20", "2025-08-01", "2025-09-01",
-    "2025-09-20", "2025-11-01", "2025-12-01",
+    "2025-01-20",
+    "2025-04-01",
+    "2025-05-20",
+    "2025-06-15",
+    "2025-07-01",
+    "2025-07-20",
+    "2025-08-01",
+    "2025-09-01",
+    "2025-09-20",
+    "2025-11-01",
+    "2025-12-01",
   ],
   datasets: [
     {
       label: "Revenue",
-      data: [45000, 20000, 50000, 44000, 90000, 60000, 60000, 30000, 50000, 58000, 64000],
+      data: [
+        45000, 20000, 50000, 44000, 90000, 60000, 60000, 30000, 50000, 58000,
+        64000,
+      ],
       borderColor: "#C8E972",
       borderWidth: 2,
       tension: 0,
@@ -191,78 +206,89 @@ export default function CustomLineChart() {
   });
 
   //Memoized chart options
-  const options = useMemo<ChartOptions<"line">>(() => ({
-    responsive: true,
-    maintainAspectRatio: false,
-    animation: {
-      duration: 600,
-      easing: "easeOutCubic",
-    },
-    transitions: {
-      active: { animation: { duration: 0 } },
-    },
-    elements: {
-      point: {
-        radius: 0,
-        hoverRadius: 5,
-        hoverBorderWidth: 2,
-        hoverBackgroundColor: "#0e0d0d",
-        hoverBorderColor: "#C8E972",
+  const options = useMemo<ChartOptions<"line">>(
+    () => ({
+      responsive: true,
+      maintainAspectRatio: false,
+      animation: {
+        duration: 600,
+        easing: "easeOutCubic",
       },
-      line: { tension: 0.3 },
-    },
-    interaction: {
-      mode: "index",
-      intersect: false,
-    },
-    hover: {
-      mode: "index",
-      intersect: false,
-    },
-    scales: {
-      x: {
-        type: "time",
-        time: { unit: "month", displayFormats: { month: "MMM" } },
-        grid: { drawOnChartArea: false },
-        ticks: { autoSkip: true, maxTicksLimit: 6 },
+      transitions: {
+        active: { animation: { duration: 0 } },
       },
-      y: {
-        beginAtZero: true,
-        ticks: {
-          callback: (val) => `$${(+val / 1000).toFixed(0)}K`,
-          color: "#ccc",
+      elements: {
+        point: {
+          radius: 0,
+          hoverRadius: 5,
+          hoverBorderWidth: 2,
+          hoverBackgroundColor: "#0e0d0d",
+          hoverBorderColor: "#C8E972",
         },
-        grid: { color: "#333" },
+        line: { tension: 0.3 },
       },
-    },
-    plugins: {
-      tooltip: {
-        enabled: false, // disable native tooltip
-        external: (context) => {
-          const tooltipModel = context.tooltip;
-          const point = tooltipModel.dataPoints?.[0];
-
-          if (!point) {
-            setTooltipState((prev) => ({ ...prev, visible: false }));
-            return;
-          }
-
-          const canvasRect = context.chart.canvas.getBoundingClientRect();
-
-          setTooltipState({
-            x: canvasRect.left + tooltipModel.caretX - 100,
-            y: canvasRect.top + tooltipModel.caretY - 120,
-            value: typeof point.raw === "number" ? point.raw : 0,
-            visible: true,
-          });
+      interaction: {
+        mode: "index",
+        intersect: false,
+      },
+      hover: {
+        mode: "index",
+        intersect: false,
+      },
+      scales: {
+        x: {
+          type: "time",
+          time: { unit: "month", displayFormats: { month: "MMM" } },
+          grid: { drawOnChartArea: false },
+          ticks: { autoSkip: true, maxTicksLimit: 6 },
+        },
+        y: {
+          beginAtZero: true,
+          ticks: {
+            callback: (val) => `$${(+val / 1000).toFixed(0)}K`,
+            color: "#ccc",
+          },
+          grid: { color: "#333" },
         },
       },
-      legend: { display: false },
-    },
-  }), []);
+      plugins: {
+        tooltip: {
+          enabled: false, // disable native tooltip
+          external: (context) => {
+            const tooltipModel = context.tooltip;
+            const point = tooltipModel.dataPoints?.[0];
+
+            if (!point) {
+              setTooltipState((prev) => ({ ...prev, visible: false }));
+              return;
+            }
+
+            const canvasRect = context.chart.canvas.getBoundingClientRect();
+
+            setTooltipState({
+              x: canvasRect.left + tooltipModel.caretX - 100,
+              y: canvasRect.top + tooltipModel.caretY - 120,
+              value: typeof point.raw === "number" ? point.raw : 0,
+              visible: true,
+            });
+          },
+        },
+        legend: { display: false },
+      },
+    }),
+    []
+  );
 
   return (
-    <div className="text-white w-full h-[150px] sm:h-50 md:h-[340px] p-4 rounded-md">
+    <div
+      className="relative text-white w-full h-[150px] sm:h-50 md:h-[340px] p-4 rounded-md"
+      onMouseLeave={() => {
+        setTooltipState((prev) => ({ ...prev, visible: false }));
+      }}
+      onTouchStart={() => {
+        setTooltipState((prev) => ({ ...prev, visible: false }));
+      }}
+    >
       <Line data={data} options={options} />
       <ChartTooltip {...tooltipState} />
     </div>
