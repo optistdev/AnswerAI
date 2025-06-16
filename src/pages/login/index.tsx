@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { toast } from 'sonner';
 
-import Input from '../../components/input';
+import Input from '../../components/input/CustomInput';
 import Button from '../../components/button/AuthButton';
 import { loginWithEmail, loginWithGoogle } from '../../utils/authService';
 import useAppDispatch from '../../hooks/global/useAppDispatch';

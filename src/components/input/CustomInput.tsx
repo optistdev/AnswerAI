@@ -14,7 +14,7 @@ interface InputProps {
  * CustomizedInput - A styled input field with optional error message.
  * Supports various input types and custom error styling.
  */
-const CustomizedInput: React.FC<InputProps> = ({
+const CustomInput: React.FC<InputProps> = ({
   className,
   type = 'text',
   placeholder,
@@ -23,7 +23,7 @@ const CustomizedInput: React.FC<InputProps> = ({
   name,
 }) => {
   const isPassword = type === 'password';
-  const inputBorder = error ? 'border border-red-500' : 'border border-[#5a5a5a]';
+  const inputBorder = error ? 'border border-red-500' : 'border border-border-primary';
 
   return (
     <div className={`relative ${className}`}>
@@ -56,4 +56,4 @@ const CustomizedInput: React.FC<InputProps> = ({
   );
 };
 
-export default CustomizedInput;
+export default CustomInput;

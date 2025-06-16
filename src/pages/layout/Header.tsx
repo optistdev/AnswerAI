@@ -4,7 +4,7 @@ import { Search, X } from "lucide-react";
 
 import { MenuBarIcon } from "../../utils/icons";
 import SearchInput from "../../components/input/SearchInput";
-import Button from "../../components/button";
+import Button from "../../components/button/CustomButton";
 import useAppDispatch from "../../hooks/global/useAppDispatch";
 import { setIsMenuOpen } from "../../store/slices/loading.slice";
 import { dashboardTabs as tabs } from "../../utils/data";
@@ -93,7 +93,7 @@ const TabItem = ({ active, name, onClick }: TabProps) => (
   <button
     onClick={onClick}
     className={`h-[37px] px-2 lg:px-5 text-sm sm:text-[16px] rounded-sm flex items-center text-white cursor-pointer
-      ${active ? "bg-[#242424] border border-[#5A5A5A]" : "bg-transparent"}`}
+      ${active ? "bg-[#242424] border border-border-primary" : "bg-transparent"}`}
   >
     {name}
   </button>

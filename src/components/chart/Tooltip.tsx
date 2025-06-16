@@ -22,7 +22,7 @@ export const ChartTooltip: React.FC<Props> = ({ x, y, value, visible }) => {
       }`}
       style={{ left: `${x}px`, top: `${y}px` }}
     >
-      <div className="text-white bg-[#222324] p-5 rounded-md border border-[#525252] shadow-lg">
+      <div className="text-white bg-background-surface p-5 rounded-md border border-border-secondary shadow-lg">
         {/* Top Row: Value + Help Icon */}
         <div className="flex justify-between items-center">
           <div className="text-[20px] font-semibold mb-1">{formatted}</div>

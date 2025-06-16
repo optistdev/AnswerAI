@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
 
-import Button from "../../components/button";
+import Button from "../../components/button/CustomButton";
 import { senarioResults as results } from "../../utils/data";
 import { SparklesIcon, DotsIcon } from "../../utils/icons";
 
@@ -14,20 +14,23 @@ const SenarioResults = () => {
 
   return (
     <div className="pt-4 md:pt-10 flex flex-col">
-      
       {/* Header Section */}
       <div className="flex justify-between">
         <div className="flex items-center gap-2.5">
-          <SparklesIcon className="text-[#DAFD7F]" />
-          <p className="text-lg md:text-2xl text-[#DCFF7F]">
+          <SparklesIcon className="text-active" />
+          <p className="text-lg md:text-2xl text-active">
             Best Scenario Results
           </p>
         </div>
         <Button
-          className="rounded-full border-[#C8E972] border w-11 h-[34px]"
-          icon={show
-            ? <ChevronUp className="text-[#C8E972]" />
-            : <ChevronDown className="text-[#C8E972]" />
+          active
+          className="rounded-full border w-11 h-[34px]"
+          icon={
+            show ? (
+              <ChevronUp />
+            ) : (
+              <ChevronDown />
+            )
           }
           onClick={() => setShow(!show)}
         />
@@ -43,13 +46,13 @@ const SenarioResults = () => {
           {results.map((result: string, index: number) => (
             <div
               key={`${result}-${index}`}
-              className="flex justify-between items-center text-[#C8E972] border-[#C8E972] border-[0.5px] rounded-[6px] py-2 px-3 md:py-4 md:px-6"
+              className="flex justify-between items-center text-active border-active border-[0.5px] rounded-[6px] py-2 px-3 md:py-4 md:px-6"
             >
               <p className="text-[16px]">{result}</p>
               <Button
                 className="border-none bg-inherit"
                 onClick={() => console.log("")}
-                icon={<DotsIcon className="text-[#C8E972]" />}
+                icon={<DotsIcon className="text-active" />}
               />
             </div>
           ))}

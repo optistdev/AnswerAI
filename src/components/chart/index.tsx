@@ -299,8 +299,8 @@ export default function CustomLineChart() {
   );
 
   return (
-    <div ref={containerRef} className="p-4 rounded-md">
-      <div className="text-white w-full h-[150px] sm:h-50 md:h-[345px]">
+    <div ref={containerRef} className="p-4 rounded-md mt-5">
+      <div className="text-white w-full h-[150px] sm:h-50 md:h-[300px]">
         <Line data={data} options={options} />
         {tooltipState.visible && <ChartTooltip {...tooltipState} />}
       </div>

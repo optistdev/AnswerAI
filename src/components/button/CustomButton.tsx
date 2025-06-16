@@ -12,12 +12,12 @@ interface ButtonProps {
  * CustomizedButton - A reusable, stylized button component.
  * Supports optional icon and label, active state styling, and click handling.
  */
-const CustomizedButton = ({ className, icon, label, onClick, active = false }: ButtonProps) => {
+const CustomButton = ({ className, icon, label, onClick, active = false }: ButtonProps) => {
   return (
     <button
       onClick={onClick}
       className={`cursor-pointer border-[0.67px] 
-        ${active ? 'border-[#577113] bg-[#23291E] text-[#C9FF3B]' : 'border-[#5a5a5a] bg-[#242424] text-white'}
+        ${active ? 'border-active bg-[#23291E] text-active' : 'border-border-primary bg-[#242424] text-white'}
         rounded-[4px] text-[16px] font-semibold
         active:scale-95 transition-all duration-200 
         flex gap-2.5 items-center justify-center ${className}`}
@@ -30,4 +30,4 @@ const CustomizedButton = ({ className, icon, label, onClick, active = false }: B
   );
 };
 
-export default CustomizedButton;
+export default CustomButton;

@@ -30,7 +30,7 @@ export const VariableButton = ({
         onMouseLeave={onMouseLeave}
         className={`flex items-center gap-[15px] px-4 py-1 rounded-full border text-[15px] tracking-[0%] leading-[150%] font-normal transition-colors
           ${selected
-            ? "bg-[#282E16] text-lime-400 border-[#C9FF3B]"
+            ? "bg-[#282E16] text-lime-400 border-active"
             : "bg-[#5959594D] text-gray-300 border-[#EEEEEE]"
           }`}
       >

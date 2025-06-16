@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { registerWithEmail } from '../../utils/authService';
 import { useNavigate } from 'react-router-dom';
-import Input from '../../components/input';
+import Input from '../../components/input/CustomInput';
 import Button from '../../components/button/AuthButton';
 import { Link } from 'react-router-dom';
 import { toast } from 'sonner';
