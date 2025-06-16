@@ -1,6 +1,4 @@
 import {
-  type ChartOptions,
-  type ChartData,
   Chart as ChartJS,
   LineController,
   LineElement,
@@ -10,59 +8,137 @@ import {
   Tooltip,
   Filler,
   CategoryScale,
-  Chart,
+  type ChartOptions,
+  type ChartData,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 import "chartjs-adapter-date-fns";
+import { useState, useMemo } from "react";
+import { startOfWeek } from "date-fns";
+import ChartTooltip from "./Tooltip";
 
-import { addWeeks, isBefore } from 'date-fns';
+// ----------------------
+//Plugin: Hover Dashed Line
+// ----------------------
+const hoverDashedLinePlugin = {
+  id: "hoverDashedLinePlugin" as const,
+  afterDatasetsDraw(chart: any) {
+    const active = chart.getActiveElements?.()[0];
+    if (!active) return;
 
+    const { ctx, scales } = chart;
+    const x = active.element.x;
+
+    ctx.save();
+    ctx.setLineDash([4, 4]);
+    ctx.strokeStyle = "#C8E972";
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(x, scales.y.top);
+    ctx.lineTo(x, scales.y.bottom);
+    ctx.stroke();
+    ctx.restore();
+  },
+};
+
+// ----------------------
+//Plugin: Vertical Underline Grid
+// ----------------------
 const underLineGridPlugin = {
-  id: 'underLineGridPlugin',
-  afterDatasetsDraw(chart) {
+  id: "underLineGridPlugin" as const,
+  afterDatasetsDraw(chart: any) {
     const { ctx, scales } = chart;
     const xScale = scales.x;
     const yScale = scales.y;
-    const dataset = chart.getDatasetMeta(0);
-    const points = dataset.data;
+    const points = chart.getDatasetMeta(0).data;
 
-    const minDate = xScale.min; // timestamp
-    const maxDate = xScale.max;
+    let currentDate = startOfWeek(new Date(xScale.min), { weekStartsOn: 1 });
+    const msPerWeek = 7 * 24 * 60 * 60 * 1000;
+    let lastX = -Infinity;
 
     ctx.save();
     ctx.setLineDash([]);
-    ctx.strokeStyle = '#2f2f2f';
-    ctx.lineWidth = 1;
+    ctx.strokeStyle = "rgba(200, 233, 114, 0.12)";
+    ctx.lineWidth = 3.5;
 
-    let currentDate = new Date(minDate);
-
-    while (currentDate <= new Date(maxDate)) {
+    for (let guard = 0; guard < 100 && currentDate <= new Date(xScale.max); guard++) {
       const x = xScale.getPixelForValue(currentDate);
-
-      // Find 2 chart points surrounding this x
-      for (let i = 0; i < points.length - 1; i++) {
-        const p1 = points[i];
-        const p2 = points[i + 1];
-        if (p1.x <= x && x <= p2.x) {
-          const ratio = (x - p1.x) / (p2.x - p1.x);
-          const y = p1.y + ratio * (p2.y - p1.y);
-
-          ctx.beginPath();
-          ctx.moveTo(x, yScale.bottom);
-          ctx.lineTo(x, y);
-          ctx.stroke();
-          break;
+      if (Math.abs(x - lastX) >= 20) {
+        for (let i = 0; i < points.length - 1; i++) {
+          const p1 = points[i];
+          const p2 = points[i + 1];
+          if (p1.x <= x && x <= p2.x) {
+            const y = p1.y + ((x - p1.x) / (p2.x - p1.x)) * (p2.y - p1.y);
+            ctx.beginPath();
+            ctx.moveTo(x, yScale.bottom);
+            ctx.lineTo(x, y);
+            ctx.stroke();
+            lastX = x;
+            break;
+          }
         }
       }
-
-      currentDate = addWeeks(currentDate, 1);
+      currentDate = new Date(currentDate.getTime() + msPerWeek);
     }
 
     ctx.restore();
   },
 };
 
-// Register components
+// ----------------------
+//Plugin: "Now" Marker with Label and Dot
+// ----------------------
+const nowMarkerPlugin = {
+  id: "nowMarkerPlugin" as const,
+  afterDatasetsDraw(chart: any) {
+    const { ctx, scales, chartArea } = chart;
+    const xScale = scales.x;
+    const yScale = scales.y;
+    const now = new Date();
+    const nowX = xScale.getPixelForValue(now);
+
+    if (nowX < chartArea.left || nowX > chartArea.right) return;
+
+    const points = chart.getDatasetMeta(0).data;
+    let y: number | null = null;
+
+    for (let i = 0; i < points.length - 1; i++) {
+      const p1 = points[i];
+      const p2 = points[i + 1];
+      if (p1.x <= nowX && nowX <= p2.x) {
+        y = p1.y + ((nowX - p1.x) / (p2.x - p1.x)) * (p2.y - p1.y);
+        break;
+      }
+    }
+
+    ctx.save();
+    ctx.setLineDash([4, 4]);
+    ctx.strokeStyle = "#C8E972";
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(nowX, yScale.top);
+    ctx.lineTo(nowX, yScale.bottom);
+    ctx.stroke();
+    ctx.restore();
+
+    if (y !== null) {
+      ctx.beginPath();
+      ctx.arc(nowX, y, 5, 0, 2 * Math.PI);
+      ctx.fillStyle = "#0e0d0d";
+      ctx.strokeStyle = "#C8E972";
+      ctx.lineWidth = 2;
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.font = "12px sans-serif";
+      ctx.textAlign = "center";
+      ctx.fillStyle = "#ccc";
+      ctx.fillText("Now", nowX, yScale.bottom + 20);
+    }
+  },
+};
+
+//Register all plugins and chart components
 ChartJS.register(
   LineController,
   LineElement,
@@ -72,126 +148,123 @@ ChartJS.register(
   CategoryScale,
   Tooltip,
   Filler,
-  underLineGridPlugin
+  hoverDashedLinePlugin,
+  underLineGridPlugin,
+  nowMarkerPlugin
 );
 
-// 👉 Custom plugin to draw vertical line on hover
-// const activeElements = chart.getActiveElements();
-
-const verticalLinePlugin = {
-  id: "verticalLinePlugin",
-  afterDatasetsDraw: (chart: Chart) => {
-    const activeElements = chart.getActiveElements();
-
-    if (activeElements.length > 0) {
-      const { ctx } = chart;
-      const x = activeElements[0].element.x;
-      const topY = chart.scales.y.top;
-      const bottomY = chart.scales.y.bottom;
-
-      ctx.save();
-      ctx.beginPath();
-      ctx.moveTo(x, topY);
-      ctx.lineTo(x, bottomY);
-      ctx.lineWidth = 1;
-      ctx.strokeStyle = "#666";
-      ctx.setLineDash([4, 4]); // dashed line
-      ctx.stroke();
-      ctx.restore();
-    }
-  },
-};
-
+// ----------------------
+//Line Chart Data
+// ----------------------
 const data: ChartData<"line"> = {
   labels: [
-    "2024-01-20",
-    "2024-04-01",
-    "2024-05-20",
-    "2024-06-15",
-    "2024-07-01",
-    "2024-07-20",
-    "2024-08-01",
-    "2024-09-01",
-    "2024-09-20",
-    "2024-11-01",
-    "2024-12-01",
+    "2025-01-20", "2025-04-01", "2025-05-20", "2025-06-15",
+    "2025-07-01", "2025-07-20", "2025-08-01", "2025-09-01",
+    "2025-09-20", "2025-11-01", "2025-12-01",
   ],
   datasets: [
     {
       label: "Revenue",
-      data: [
-        45000, 20000, 50000, 44000, 90000, 60000, 60000, 30000, 50000, 58000,
-        64000,
-      ],
+      data: [45000, 20000, 50000, 44000, 90000, 60000, 60000, 30000, 50000, 58000, 64000],
       borderColor: "#C8E972",
       borderWidth: 2,
       tension: 0,
       fill: false,
       pointRadius: 0,
-      pointHoverRadius: 0,
+      pointHoverRadius: 5,
+      pointHoverBorderWidth: 2,
+      pointHoverBackgroundColor: "#0e0d0d",
+      pointHoverBorderColor: "#C8E972",
     },
   ],
 };
 
-const options: ChartOptions<"line"> = {
-  responsive: true,
-  maintainAspectRatio: false,
-  interaction: {
-    mode: "index",
-    intersect: false,
-  },
-  scales: {
-    x: {
-      type: "time",
-      time: {
-        unit: "month",
-        displayFormats: { month: "MMM" },
-      },
-      grid: {
-        drawOnChartArea: false, // hide default full grid lines
-      },
-      ticks: {
-        color: "#ccc",
-        maxTicksLimit: 6,
-      },
+// ----------------------
+//Chart Component
+// ----------------------
+export default function CustomLineChart() {
+  const [tooltipState, setTooltipState] = useState({
+    x: 0,
+    y: 0,
+    value: 0,
+    visible: false,
+  });
+
+  //Memoized chart options
+  const options = useMemo<ChartOptions<"line">>(() => ({
+    responsive: true,
+    maintainAspectRatio: false,
+    animation: {
+      duration: 600,
+      easing: "easeOutCubic",
     },
-    y: {
-      beginAtZero: true,
-      ticks: {
-        callback: (val: any) => `$${val / 1000}K`,
-        color: "#ccc",
-      },
-      grid: {
-        color: "#333",
-      },
+    transitions: {
+      active: { animation: { duration: 0 } },
     },
-  },
-  plugins: {
-    tooltip: {
+    elements: {
+      point: {
+        radius: 0,
+        hoverRadius: 5,
+        hoverBorderWidth: 2,
+        hoverBackgroundColor: "#0e0d0d",
+        hoverBorderColor: "#C8E972",
+      },
+      line: { tension: 0.3 },
+    },
+    interaction: {
       mode: "index",
       intersect: false,
-      callbacks: {
-        label: function (ctx) {
-          const val: any = ctx.raw;
-          return `$${(val / 1000).toFixed(1)}K`;
+    },
+    hover: {
+      mode: "index",
+      intersect: false,
+    },
+    scales: {
+      x: {
+        type: "time",
+        time: { unit: "month", displayFormats: { month: "MMM" } },
+        grid: { drawOnChartArea: false },
+        ticks: { autoSkip: true, maxTicksLimit: 6 },
+      },
+      y: {
+        beginAtZero: true,
+        ticks: {
+          callback: (val) => `$${(+val / 1000).toFixed(0)}K`,
+          color: "#ccc",
+        },
+        grid: { color: "#333" },
+      },
+    },
+    plugins: {
+      tooltip: {
+        enabled: false, // disable native tooltip
+        external: (context) => {
+          const tooltipModel = context.tooltip;
+          const point = tooltipModel.dataPoints?.[0];
+
+          if (!point) {
+            setTooltipState((prev) => ({ ...prev, visible: false }));
+            return;
+          }
+
+          const canvasRect = context.chart.canvas.getBoundingClientRect();
+
+          setTooltipState({
+            x: canvasRect.left + tooltipModel.caretX - 100,
+            y: canvasRect.top + tooltipModel.caretY - 120,
+            value: typeof point.raw === "number" ? point.raw : 0,
+            visible: true,
+          });
         },
       },
-      backgroundColor: "#161618",
-      titleColor: "#fff",
-      bodyColor: "#fff",
-      borderColor: "#333",
-      borderWidth: 1,
+      legend: { display: false },
     },
-    legend: { display: false },
-  },
-};
+  }), []);
 
-ChartJS.register(verticalLinePlugin);
-
-export default function CustomLineChart() {
   return (
-    <div className="text-white w-full h-[300px] p-4 rounded-md">
+    <div className="text-white w-full h-[150px] sm:h-50 md:h-[340px] p-4 rounded-md">
       <Line data={data} options={options} />
+      <ChartTooltip {...tooltipState} />
     </div>
   );
 }

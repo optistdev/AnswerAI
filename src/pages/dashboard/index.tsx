@@ -67,9 +67,9 @@ const DashboardPage = () => {
         {/* Graph Section */}
         <div className="xl:col-span-7 flex flex-col">
           <h2 className="mb-4 text-sm md:text-lg xl:text-2xl font-semibold">Graphs</h2>
-          <div className="bg-[#222324] rounded-[5px] border border-[#525252] flex-1 p-4 md:p-6">
-            <div className="flex justify-end mb-4">
-              <select className="bg-[#18181A80] text-white border border-neutral-600 rounded px-3 py-2 text-sm w-full sm:w-auto">
+          <div className="bg-[#222324] rounded-[5px] border border-[#525252] flex-1 pt-4 md:p-6">
+            <div className="flex justify-end mb-2">
+              <select className="bg-[#18181A80] text-white border border-neutral-600 rounded px-3 py-2 mx-2 sm:mx-0 text-sm w-full sm:w-auto">
                 <option>Unsatisfied Demand %</option>
               </select>
             </div>
