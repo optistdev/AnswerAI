@@ -77,8 +77,6 @@ const Sidebar = () => {
   }, [selectedItemFromPath]);
 
   const toggleSidebar = () => {
-    console.log('here');
-
     dispatch(setIsMenuOpen(!isMenuOpen));
   };
 
