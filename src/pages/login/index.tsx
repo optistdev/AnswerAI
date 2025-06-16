@@ -5,6 +5,8 @@ import Input from '../../components/input';
 import Button from '../../components/auth-button';
 import { Link } from 'react-router-dom';
 import { toast } from 'sonner';
+import useAppDispatch from '../../hooks/global/useAppDispatch';
+import { setLoading } from '../../store/slices/loading.slice';
 
 const LoginPage: React.FC = () => {
   const navigate = useNavigate();
@@ -17,6 +19,8 @@ const LoginPage: React.FC = () => {
     email: '',
     password: '',
   });
+
+  const dispatch = useAppDispatch();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -47,6 +51,7 @@ const LoginPage: React.FC = () => {
     if (hasError) return;
 
     try {
+      dispatch(setLoading(true));
       await loginWithEmail(formData.email, formData.password);
       toast.success('Logged in successfully!');
       navigate('/dashboard');
@@ -65,9 +70,11 @@ const LoginPage: React.FC = () => {
         toast.error('Login failed', { description: err.message || 'Unknown error.' });
       }
     }
+    dispatch(setLoading(false));
   };
   const googleAuthHandler = async () => {
     try {
+      dispatch(setLoading(true));
       await loginWithGoogle();
       toast.success('Logged in successfully!');
       navigate('/dashboard');
@@ -75,6 +82,7 @@ const LoginPage: React.FC = () => {
       console.error('Google login failed:', err.message);
       toast.error('Login failed', { description: err.message || 'Unknown error.' });
     }
+    dispatch(setLoading(false));
   };
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;

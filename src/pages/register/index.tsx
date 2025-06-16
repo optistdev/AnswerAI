@@ -7,6 +7,8 @@ import { Link } from 'react-router-dom';
 import { toast } from 'sonner';
 import { signOut } from 'firebase/auth';
 import { auth } from '../../lib/firebase';
+import { setLoading } from '../../store/slices/loading.slice';
+import useAppDispatch from '../../hooks/global/useAppDispatch';
 
 const RegisterPage: React.FC = () => {
   const navigate = useNavigate();
@@ -21,6 +23,8 @@ const RegisterPage: React.FC = () => {
     password: '',
     repassword: '',
   });
+
+  const dispatch = useAppDispatch();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -60,6 +64,7 @@ const RegisterPage: React.FC = () => {
     if (hasError) return;
 
     try {
+      dispatch(setLoading(true));
       await registerWithEmail(formData.email, formData.password);
       await signOut(auth);
       toast.success('Registration successful!', {
@@ -80,6 +85,7 @@ const RegisterPage: React.FC = () => {
         });
       }
     }
+    dispatch(setLoading(false));
   };
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
