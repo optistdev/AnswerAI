@@ -34,7 +34,7 @@ const Header = () => {
 
           {showTabs && (
             <>
-              {tabs.map((tab, index) => (
+              {tabs.map((tab) => (
                 <TabItem
                   key={tab.key}
                   name={tab.name}

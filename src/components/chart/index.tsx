@@ -13,7 +13,7 @@ import {
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 import "chartjs-adapter-date-fns";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useRef, useEffect } from "react";
 import { startOfWeek } from "date-fns";
 import ChartTooltip from "./Tooltip";
 
@@ -205,6 +205,44 @@ export default function CustomLineChart() {
     visible: false,
   });
 
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const hideTooltip = () =>
+      setTooltipState((prev) => ({ ...prev, visible: false }));
+
+    const handleMouseLeave = () => hideTooltip();
+
+    const handleWindowMouseOut = (e: MouseEvent) => {
+      if (
+        !e.relatedTarget ||
+        (e.relatedTarget as HTMLElement).nodeName === "HTML"
+      ) {
+        hideTooltip();
+      }
+    };
+
+    const handlePointerDown = (e: PointerEvent) => {
+      // Hide tooltip if user tapped/clicked outside chart container
+      if (!container.contains(e.target as Node)) {
+        hideTooltip();
+      }
+    };
+
+    container.addEventListener("mouseleave", handleMouseLeave);
+    window.addEventListener("mouseout", handleWindowMouseOut);
+    document.addEventListener("pointerdown", handlePointerDown, true); // 🔥 KEY FIX
+
+    return () => {
+      container.removeEventListener("mouseleave", handleMouseLeave);
+      window.removeEventListener("mouseout", handleWindowMouseOut);
+      document.removeEventListener("pointerdown", handlePointerDown, true);
+    };
+  }, []);
+
   //Memoized chart options
   const options = useMemo<ChartOptions<"line">>(
     () => ({
@@ -222,7 +260,6 @@ export default function CustomLineChart() {
           radius: 0,
           hoverRadius: 5,
           hoverBorderWidth: 2,
-          hoverBackgroundColor: "#0e0d0d",
           hoverBorderColor: "#C8E972",
         },
         line: { tension: 0.3 },
@@ -280,17 +317,11 @@ export default function CustomLineChart() {
   );
 
   return (
-    <div
-      className="relative text-white w-full h-[150px] sm:h-50 md:h-[340px] p-4 rounded-md"
-      onMouseLeave={() => {
-        setTooltipState((prev) => ({ ...prev, visible: false }));
-      }}
-      onTouchStart={() => {
-        setTooltipState((prev) => ({ ...prev, visible: false }));
-      }}
-    >
-      <Line data={data} options={options} />
-      <ChartTooltip {...tooltipState} />
+    <div ref={containerRef} className="p-4 rounded-md">
+      <div className="text-white w-full h-[150px] sm:h-50 md:h-[340px]">
+        <Line data={data} options={options} />
+        {tooltipState.visible && <ChartTooltip {...tooltipState} />}
+      </div>
     </div>
   );
 }

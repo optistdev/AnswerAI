@@ -18,8 +18,8 @@ const UploadIcon = ({ className }: UploadIconProps) => (
     <path
       d="M1 10V15C1 16.6569 2.34315 18 4 18H14C15.6569 18 17 16.6569 17 15V10"
       stroke="#B9B9B9"
-      stroke-width="1.5"
-      stroke-linecap="round"
+      strokeWidth="1.5"
+      strokeLinecap="round"
     />
   </svg>
 );
