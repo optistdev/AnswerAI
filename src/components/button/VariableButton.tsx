@@ -5,9 +5,19 @@ type VariableButtonProps = {
   label: string;
   selected?: boolean;
   onClick: () => void;
+  onMouseEnter: (desc: String, title: String) => void;
+  onMouseLeave: () => void;
+  desc: String;
 };
 
-export const VariableButton = ({ label, selected = false, onClick }: VariableButtonProps) => {
+export const VariableButton = ({
+  label,
+  selected = false,
+  onClick,
+  onMouseEnter,
+  onMouseLeave,
+  desc,
+}: VariableButtonProps) => {
   return (
     <div className="relative group cursor-pointer">
       <button
@@ -16,6 +26,8 @@ export const VariableButton = ({ label, selected = false, onClick }: VariableBut
           ${
             selected ? 'bg-[#282E16] text-lime-400 border-[#C9FF3B]' : 'bg-[#5959594D] text-gray-300 border-[#EEEEEE]'
           }`}
+        onMouseEnter={() => onMouseEnter(desc, label)}
+        onMouseLeave={onMouseLeave}
       >
         {label}
         <div className="flex gap-2">
