@@ -24,6 +24,8 @@ const Header = () => {
   return (
     <>
       <div className="flex bg-background-primary justify-between items-center w-full h-16 md:h-[87px] px-4 md:px-6 pt-2 md:pt-5 sticky top-0">
+        {/* <div className="absolute top-0 right-0 z-40 bg-background-primary flex justify-between items-center w-full h-16 md:h-[87px] px-4 md:px-6 pt-2 md:pt-5"> */}
+
         <div className="flex items-center gap-2 w-full md:w-auto">
           <button
             className="md:hidden flex items-center justify-center text-white h-[37px] px-3"
