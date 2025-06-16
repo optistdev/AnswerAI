@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import { X, Info } from 'lucide-react';
 import SearchInput from '../../components/input/SearchInput';
 import Button from '../../components/button';
@@ -89,10 +89,6 @@ const EditVariables = ({ onClick, className }: EditVariablesProps) => {
     dispatch(setSelectedVariables(temp2));
   };
 
-  useEffect(() => {
-    console.log(showDescription);
-  }, [showDescription]);
-
   const handleMouseEnter = (desc?: string, title?: string) => {
     timerRef.current = setTimeout(() => {
       setShowDescription({
@@ -177,7 +173,7 @@ const EditVariables = ({ onClick, className }: EditVariablesProps) => {
             <p className="text-xl md:text-2xl text-[#DCFF7F]">Primary Variables</p>
           </div>
           <Button
-            className="rounded-full border-[#C8E972] border w-11 h-[34px] pl-3"
+            className="rounded-full border-[#C8E972] border w-11 h-[34px]"
             icon={showPrimary ? <ChevronUp className="text-[#C8E972]" /> : <ChevronDown className="text-[#C8E972]" />}
             onClick={() => setShowPrimary(!showPrimary)}
           />
@@ -187,7 +183,7 @@ const EditVariables = ({ onClick, className }: EditVariablesProps) => {
             <p className="text-xl md:text-2xl text-[#DCFF7F]">Secondary Variables</p>
           </div>
           <Button
-            className="rounded-full border-[#C8E972] border w-11 h-[34px] pl-3"
+            className="rounded-full border-[#C8E972] border w-11 h-[34px]"
             icon={showSecondary ? <ChevronUp className="text-[#C8E972]" /> : <ChevronDown className="text-[#C8E972]" />}
             onClick={() => setShowSecondary(!showSecondary)}
           />
