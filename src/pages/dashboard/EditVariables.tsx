@@ -12,16 +12,62 @@ interface EditVariablesProps {
   className: String;
 }
 
+const variables = [
+  {
+    id: 'category1',
+    label: 'Variable Category 1',
+    variables: [
+      {
+        id: 'carbon1',
+        label: 'Carbon 1',
+      },
+      {
+        id: 'co2_distribution',
+        label: 'Co2 Distribution',
+        description:
+          "But what truly sets Switch apart is its versatility. It can be used as a scooter, a bike, or even a skateboard, making it suitable for people of all ages. Whether you're a student, a professional, or a senior citizen, Switch adapts to your needs and lifestyle.",
+      },
+      {
+        id: 'fleet_size',
+        label: 'Fleet Sizing',
+      },
+    ],
+  },
+  {
+    id: 'category2',
+    label: 'Variable Category 2',
+    variables: [
+      {
+        id: 'parking_rate',
+        label: 'Parking Rate',
+      },
+      {
+        id: 'border_rate',
+        label: 'Border Rate',
+      },
+      {
+        id: 'request_rate',
+        label: 'Request Rate',
+      },
+    ],
+  },
+];
+
 const EditVariables = ({ onClick, className }: EditVariablesProps) => {
   const [showPrimary, setShowPrimary] = useState(true);
   const [showSecondary, setShowSecondary] = useState(true);
+  const [selectedVariables, setSelectedVariables] = useState([]);
   const changeHandler = () => {};
   const reRunHandler = () => {};
   const autofillHandler = () => {};
-  const variableClickHandler = () => {};
+  const variableClickHandler = (id: string) => {
+    const temp = selectedVariables;
+    // if (selectedVariables.includes(id)) {
+    // }
+  };
   return (
     <div className={`bg-black/50 z-50 backdrop-blur-xs fixed top-0 left-0 w-screen flex justify-end ${className}`}>
-      <div className="w-172 bg-[#0E0D0D] h-screen border border-l-2 border-[#525252] relative px-7 py-3 overflow-y-scroll">
+      <div className="w-172 bg-[#0E0D0D] h-screen border border-l-2 border-[#525252] relative px-7 py-3 overflow-y-auto">
         <button className="outline-none cursor-pointer">
           <X className="w-6 h-6 text-white absolute right-7 top-10" onClick={onClick} />
         </button>
@@ -37,34 +83,21 @@ const EditVariables = ({ onClick, className }: EditVariablesProps) => {
           <Button className="h-9" onClick={reRunHandler} label="Rerun" icon={<RefreshIcon className="w-5 h-5" />} />
         </div>
         <div className="bg-[#161618] border border-[#525252] rounded-sm">
-          <div className="h-101 border border-b border-[#525252] py-8 px-6 overflow-y-scroll">
-            <div className="mb-8">
-              <div className="text-[#D5D5D5] mb-5">Variable category 1</div>
-              <div className="flex gap-4 flex-wrap">
-                <VariableButton label="Carbon1" onClick={variableClickHandler} />
-                <VariableButton label="Co2 Distribution" selected onClick={variableClickHandler} />
-                <VariableButton label="Fleet Sizing" selected onClick={variableClickHandler} />
-              </div>
-            </div>
-            <div className="mb-8">
-              <div className="text-[#D5D5D5] mb-5">Variable category 2</div>
-              <div className="flex gap-4 flex-wrap">
-                <VariableButton label="Parking Rate" onClick={variableClickHandler} />
-                <VariableButton label="Border Rate" selected onClick={variableClickHandler} />
-                <VariableButton label="Request Rate" selected onClick={variableClickHandler} />
-                <VariableButton label="Variable 1" onClick={variableClickHandler} />
-                <VariableButton label="Variable 1" onClick={variableClickHandler} />
-                <VariableButton label="Variable 1" selected onClick={variableClickHandler} />
-              </div>
-            </div>
-            <div className="mb-8">
-              <div className="text-[#D5D5D5] mb-5">Variable category 3</div>
-              <div className="flex gap-4 flex-wrap">
-                <VariableButton label="Variable 1" onClick={variableClickHandler} />
-                <VariableButton label="Variable 1" selected onClick={variableClickHandler} />
-                <VariableButton label="Variable 1" selected onClick={variableClickHandler} />
-              </div>
-            </div>
+          <div className="h-101 border border-b border-[#525252] py-8 px-6 overflow-y-auto">
+            {variables.map((item) => {
+              return (
+                <div className="mb-8" key={item.id}>
+                  <div className="text-[#D5D5D5] mb-5">{item.label}</div>
+                  <div className="flex gap-4 flex-wrap">
+                    {item.variables.map((btn) => {
+                      return (
+                        <VariableButton key={btn.id} label={btn.label} onClick={() => variableClickHandler(btn.id)} />
+                      );
+                    })}
+                  </div>
+                </div>
+              );
+            })}
           </div>
           <div className="bg-[#222324] py-8 px-8">
             <div className="flex items-center gap-3  pb-4">
