@@ -99,7 +99,7 @@ const Sidebar = () => {
   return (
     <div
       className={`
-        fixed bg-background-primary
+        fixed bg-background-primary z-[1000]
         ${isMenuOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
         flex flex-col
         transition-[width] duration-300 ease-in-out 
