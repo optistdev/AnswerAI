@@ -17,12 +17,13 @@ const Header = () => {
   const location = useLocation();
   const dispatch = useAppDispatch();
   const [showMobileSearch, setShowMobileSearch] = useState(false);
+  const [activeTab, setActiveTab] = useState<string>("charging");
 
   const showTabs = location.pathname === "/dashboard";
 
   return (
     <>
-      <div className="flex justify-between items-center w-full h-16 md:h-[87px] px-4 md:px-6 pt-2 md:pt-5">
+      <div className="flex bg-background-primary justify-between items-center w-full h-16 md:h-[87px] px-4 md:px-6 pt-2 md:pt-5 sticky top-0">
         <div className="flex items-center gap-2 w-full md:w-auto">
           <button
             className="md:hidden flex items-center justify-center text-white h-[37px] px-3"
@@ -37,8 +38,8 @@ const Header = () => {
                 <TabItem
                   key={tab.key}
                   name={tab.name}
-                  active={index === 0}
-                  onClick={() => console.log(tab.name)}
+                  active={activeTab === tab.key}
+                  onClick={() => setActiveTab(tab.key)}
                 />
               ))}
             </div>
