@@ -77,7 +77,6 @@ const LoginPage: React.FC = () => {
       dispatch(setLoading(true));
       await loginWithEmail(formData.email, formData.password);
       toast.success('Logged in successfully!');
-      navigate('/dashboard');
     } catch (err: any) {
       const code = err.code;
       console.error(code || 'Login failed.');
@@ -103,7 +102,6 @@ const LoginPage: React.FC = () => {
       dispatch(setLoading(true));
       await loginWithGoogle();
       toast.success('Logged in successfully!');
-      navigate('/dashboard');
     } catch (err: any) {
       console.error('Google login failed:', err.message);
       toast.error('Login failed', { description: err.message || 'Unknown error.' });

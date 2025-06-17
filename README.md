@@ -103,9 +103,9 @@ Visit `http://localhost:5173` to view the application.
 | Task                             | Duration |
 |----------------------------------|----------|
 | Initial Vite + Tailwind setup    | 1h       |
-| Dashboard + Chart integration    | 4h       |
+| Dashboard + Chart integration    | 5h       |
 | Variable editing panel           | 2h       |
-| Tooltip hover interaction        | 2h       |
+| Tooltip hover interaction        | 1h       |
 | Firebase auth integration        | 2h       |
 | Responsive layout tuning         | 2h       |
 | Final polish + README            | 1h       |

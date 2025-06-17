@@ -71,7 +71,6 @@ const Sidebar = () => {
       await signOut(auth);
       localStorage.clear();
       dispatch(clearSelectedVariables());
-      navigate("/login");
     } catch (error) {
       console.error("Logout failed:", error);
     }
