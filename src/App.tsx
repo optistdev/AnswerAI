@@ -1,12 +1,13 @@
 import './App.css';
 import { BrowserRouter } from 'react-router-dom';
 import { Toaster } from 'sonner';
-import AppRoutes from './routes/AppRoutes';
-import Sidebar from './pages/layout/SideBar';
-import Header from './pages/layout/Header';
-import { useAuth } from './context/AuthContext';
-import useAppSelector from './hooks/global/useAppSelector';
-import Loading from './components/loading';
+
+import AppRoutes from '@/routes/AppRoutes';
+import Sidebar from '@/pages/layout/SideBar';
+import Header from '@/pages/layout/Header';
+import { useAuth } from '@/context/AuthContext';
+import useAppSelector from '@/hooks/global/useAppSelector';
+import Loading from '@/components/loading';
 
 function App() {
   const { user } = useAuth();

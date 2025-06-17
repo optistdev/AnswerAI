@@ -3,13 +3,13 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { ChevronLeft } from "lucide-react";
 import { signOut } from "firebase/auth";
 
-import { MenuBarIcon } from "../../utils/icons";
-import SidebarItem from "../../components/menu-item";
-import useAppSelector from "../../hooks/global/useAppSelector";
-import useAppDispatch from "../../hooks/global/useAppDispatch";
-import { setIsMenuOpen } from "../../store/slices/loading.slice";
-import { sideBarItems } from "../../utils/data";
-import { auth } from "../../utils/firebase";
+import { MenuBarIcon } from "@/utils/icons";
+import SidebarItem from "@/components/menu-item";
+import { useAppSelector, useAppDispatch } from "@/hooks";
+import { setIsMenuOpen } from "@/store/slices/loading.slice";
+import { sideBarItems } from "@/utils/data";
+import { auth } from "@/utils/firebase";
+import { clearSelectedVariables } from "@/store/slices/variables.slice";
 
 /**
  * Sidebar - Responsive sidebar with navigation, profile dropdown, and logout.
@@ -70,6 +70,7 @@ const Sidebar = () => {
     try {
       await signOut(auth);
       localStorage.clear();
+      dispatch(clearSelectedVariables());
       navigate("/login");
     } catch (error) {
       console.error("Logout failed:", error);

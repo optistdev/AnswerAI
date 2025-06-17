@@ -51,8 +51,7 @@ export const VariableButton = ({
           className="
             w-[calc(100%-20px)] h-[8px] rounded-full
             absolute bottom-[-2px] left-[10px]
-            [background:linear-gradient(90deg,_#3BFF72_0%,_#C9FF3B_52%)]
-            backdrop-blur-[20px]
+            [background:linear-gradient(90deg,_#3BFF72_0%,_#C9FF3B_52%)] blur-sm
             opacity-0 group-hover:opacity-20 transition-opacity duration-200 z-40
           "
         />

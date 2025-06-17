@@ -1,14 +1,13 @@
 import { useRef, useState } from "react";
 import { X, Info, ChevronUp, ChevronDown } from "lucide-react";
 
-import SearchInput from "../../components/input/SearchInput";
-import Button from "../../components/button/CustomButton";
-import VariableButton from "../../components/button/VariableButton";
-import useAppDispatch from "../../hooks/global/useAppDispatch";
-import useAppSelector from "../../hooks/global/useAppSelector";
-import { setSelectedVariables } from "../../store/slices/variables.slice";
-import { variables } from "../../utils/data";
-import { SparklesIcon, RefreshIcon } from "../../utils/icons";
+import SearchInput from "@/components/input/SearchInput";
+import Button from "@/components/button/CustomButton";
+import VariableButton from "@/components/button/VariableButton";
+import { useAppDispatch, useAppSelector } from "@/hooks/";
+import { setSelectedVariables } from "@/store/slices/variables.slice";
+import { variables } from "@/utils/data";
+import { SparklesIcon, RefreshIcon } from "@/utils/icons";
 
 interface EditVariablesProps {
   onClick: () => void;
@@ -187,13 +186,7 @@ const EditVariables = ({ onClick, className }: EditVariablesProps) => {
           <Button
             active
             className="rounded-full border-active border w-11 h-[34px]"
-            icon={
-              showSecondary ? (
-                <ChevronUp />
-              ) : (
-                <ChevronDown />
-              )
-            }
+            icon={showSecondary ? <ChevronUp /> : <ChevronDown />}
             onClick={() => setShowSecondary(!showSecondary)}
           />
         </div>

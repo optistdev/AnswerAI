@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-import { registerWithEmail } from '../../utils/authService';
-import { useNavigate } from 'react-router-dom';
-import Input from '../../components/input/CustomInput';
-import Button from '../../components/button/AuthButton';
-import { Link } from 'react-router-dom';
 import { toast } from 'sonner';
+import { useNavigate, Link } from 'react-router-dom';
 import { signOut } from 'firebase/auth';
-import { auth } from '../../utils/firebase';
-import { setLoading } from '../../store/slices/loading.slice';
-import useAppDispatch from '../../hooks/global/useAppDispatch';
+
+import { registerWithEmail } from '@/utils/authService';
+import Input from '@/components/input/CustomInput';
+import Button from '@/components/button/AuthButton';
+import { auth } from '@/utils/firebase';
+import { setLoading } from '@/store/slices/loading.slice';
+import { useAppDispatch } from '@/hooks';
 
 const RegisterPage: React.FC = () => {
   const navigate = useNavigate();

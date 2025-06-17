@@ -116,7 +116,7 @@ const nowMarkerPlugin = {
     // Draw vertical line
     ctx.save();
     ctx.setLineDash([4, 4]);
-    ctx.strokeStyle = "#C8E972";
+    ctx.strokeStyle = "#363637";
     ctx.lineWidth = 1;
     ctx.beginPath();
     ctx.moveTo(nowX, yScale.top);

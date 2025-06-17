@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
 
-import Button from "../../components/button/CustomButton";
-import { senarioResults as results } from "../../utils/data";
-import { SparklesIcon, DotsIcon } from "../../utils/icons";
+import Button from "@/components/button/CustomButton";
+import { senarioResults as results } from "@/utils/data";
+import { SparklesIcon, DotsIcon } from "@/utils/icons";
 
 /**
  * SenarioResults - Displays a collapsible list of best scenario results.

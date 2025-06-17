@@ -2,12 +2,12 @@ import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { Search, X } from "lucide-react";
 
-import { MenuBarIcon } from "../../utils/icons";
-import SearchInput from "../../components/input/SearchInput";
-import Button from "../../components/button/CustomButton";
-import useAppDispatch from "../../hooks/global/useAppDispatch";
-import { setIsMenuOpen } from "../../store/slices/loading.slice";
-import { dashboardTabs as tabs } from "../../utils/data";
+import { MenuBarIcon } from "@/utils/icons";
+import SearchInput from "@/components/input/SearchInput";
+import Button from "@/components/button/CustomButton";
+import { useAppDispatch } from "@/hooks";
+import { setIsMenuOpen } from "@/store/slices/loading.slice";
+import { dashboardTabs as tabs } from "@/utils/data";
 
 /**
  * Header - Top navigation bar for the dashboard.
@@ -24,7 +24,7 @@ const Header = () => {
 
   return (
     <>
-      <div className="flex bg-background-primary justify-between items-center w-full h-[87px] px-4 md:px-6 pt-2 md:pt-5 sticky top-0">
+      <div className="flex bg-background-primary justify-between items-center w-full h-[87px] px-4 md:px-6 pt-2 md:pt-5 sticky top-0 z-10">
         
         {/* Left Section: Menu + Tabs + Mobile Search Icon */}
         <div className="flex items-center justify-between gap-2 w-full md:w-auto">

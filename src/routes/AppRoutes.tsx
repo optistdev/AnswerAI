@@ -1,11 +1,12 @@
 // src/routes/index.tsx
 import { Routes, Route, Navigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
-import LoginPage from '../pages/login';
-import DashboardPage from '../pages/dashboard';
-import RegisterPage from '../pages/register';
-import Loading from '../components/loading';
-import NotFoundPage from '../pages/not-found';
+
+import { useAuth } from '@/context/AuthContext';
+import LoginPage from '@/pages/login';
+import DashboardPage from '@/pages/dashboard';
+import RegisterPage from '@/pages/register';
+import Loading from '@/components/loading';
+import NotFoundPage from '@/pages/not-found';
 
 const AppRoutes = () => {
   const { user, loading } = useAuth();

@@ -1,8 +1,8 @@
-import { createSlice } from '@reduxjs/toolkit';
-import type { PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
+import type { PayloadAction } from "@reduxjs/toolkit";
 
 interface VariablesState {
-  selectedVariables: Array<String>;
+  selectedVariables: string[];
 }
 
 const initialState: VariablesState = {
@@ -10,14 +10,18 @@ const initialState: VariablesState = {
 };
 
 export const variablesSlice = createSlice({
-  name: 'variables',
+  name: "variables",
   initialState,
   reducers: {
-    setSelectedVariables: (state, action: PayloadAction<Array<String>>) => {
+    setSelectedVariables: (state, action: PayloadAction<string[]>) => {
       state.selectedVariables = action.payload;
+    },
+
+    clearSelectedVariables: (state) => {
+      state.selectedVariables = [];
     },
   },
 });
 
-export const { setSelectedVariables } = variablesSlice.actions;
+export const { setSelectedVariables, clearSelectedVariables } = variablesSlice.actions;
 export default variablesSlice.reducer;

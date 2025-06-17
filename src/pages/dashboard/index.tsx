@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { CircleHelp } from "lucide-react";
 
-import Button from "../../components/button/CustomButton";
-import ChartView from "../../components/chart";
-import CustomSelect from "../../components/input/CustomSelect";
+import Button from "@/components/button/CustomButton";
+import ChartView from "@/components/chart";
+import CustomSelect from "@/components/input/CustomSelect";
 import SenarioResults from "./SenarioResults";
 import EditVariables from "./EditVariables";
-import { KPI_CARDS } from "../../utils/data";
-import { UploadIcon, RefreshIcon, ChargingIcon } from "../../utils/icons";
+import { KPI_CARDS } from "@/utils/data";
+import { UploadIcon, RefreshIcon, ChargingIcon } from "@/utils/icons";
 
 /**
  * DashboardPage - Displays scenario results, KPIs, charts, and allows editing variables.
