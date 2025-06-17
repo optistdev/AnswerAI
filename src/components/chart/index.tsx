@@ -16,7 +16,7 @@ import "chartjs-adapter-date-fns";
 import { useState, useMemo, useRef, useEffect } from "react";
 import { startOfWeek } from "date-fns";
 import ChartTooltip from "./Tooltip";
-import { chartData } from "../../utils/data";
+import { generateChartData } from "@/utils/mock";
 
 // ----------------------
 // Plugin: Hover Dashed Line on Hovered Point
@@ -160,6 +160,8 @@ ChartJS.register(
 // ----------------------
 // Chart Dataset
 // ----------------------
+const chartData = generateChartData();
+
 const data: ChartData<"line"> = {
   labels: chartData.map((data) => data.date),
   datasets: [
